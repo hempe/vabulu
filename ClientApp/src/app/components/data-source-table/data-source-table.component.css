@@ -1,0 +1,71 @@
+.search {
+    padding: 8px 24px 0;
+    flex-grow: 1;
+    font-size: 14px;
+    font-weight: 400;
+}
+.header {
+    display: flex;
+    background: #fafafa;
+    flex-grow: 1;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.mat-paginator {
+    background: transparent;
+    padding-top: 6px;
+}
+.select-placeholder {
+    color: rgba(0, 0, 0, 0.54);
+    position: absolute;
+    left: 0;
+}
+.selectable ::ng-deep mat-header-row,
+.selectable ::ng-deep mat-row {
+    padding: 0 24px 0 0;
+}
+.checkbox-row {
+    max-width: 72px;
+    width: 72px;
+    height: 48px;
+    position: relative;
+}
+.checkbox {
+    position: absolute;
+    top: 14px;
+    left: 24px;
+}
+
+.number,
+.decimal {
+    max-width: 200px;
+    text-align: right;
+}
+
+mat-header-cell.decimal ::ng-deep .mat-sort-header-container,
+mat-header-cell.number ::ng-deep .mat-sort-header-container {
+    align-items: flex-end;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+mat-cell.decimal ::ng-deep input,
+mat-cell.number ::ng-deep input {
+    text-align: right;
+}
+.icon {
+    max-width: 72px;
+    width: 72px;
+}
+
+mat-cell.icon {
+    height: 48px;
+    position: relative;
+}
+.icon > mat-icon {
+    position: absolute;
+    left: 0;
+    top: 12px;
+}

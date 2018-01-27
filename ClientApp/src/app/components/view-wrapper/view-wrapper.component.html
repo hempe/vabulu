@@ -1,0 +1,35 @@
+<header class="mat-elevation-z1" [style.background-color]="color"></header>
+<div class="outlet">
+    <div class="side-nav">
+        <div class="title-wrapper" *ngIf="head">
+            <div class="title-container" (click)="head.action ? head.action() : noAction()">
+                <mat-icon *ngIf="head.icon">{{head.icon}}</mat-icon>
+                <span class="title">{{ head.name | translate }}</span>
+            </div>
+            <div *ngIf="!button" class="spacer"></div>
+            <div *ngIf="button">
+                <button color="primary" mat-raised-button style="width:100%;" (click)="button.action()">
+                    <mat-icon>{{button.icon}}</mat-icon>
+                    <span>{{ button.name | translate }}</span>
+                </button>
+            </div>
+        </div>
+        <div class="menu">
+            <div *ngFor="let group of groups;let last = last;">
+                <span class="menu-title">
+                    <span *ngIf="group.name">{{ group.name | translate }}</span>
+                </span>
+                <div *ngFor="let entry of group.entries">
+                    <button class="menu-entry" mat-button (click)="entry.action ? entry.action(): noAction()">
+                        <mat-icon class="menu-entry-icon" *ngIf="entry.icon">{{entry.icon}}</mat-icon>
+                        <span>{{ entry.name | translate }}</span>
+                    </button>
+                </div>
+                <hr class="menu-divider" *ngIf="!last" />
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <ng-content></ng-content>
+    </div>
+</div>

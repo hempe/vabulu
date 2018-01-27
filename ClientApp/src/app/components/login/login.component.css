@@ -1,0 +1,70 @@
+.logo {
+    width: 25px;
+    height: 25px;
+    padding-right: 10px;
+}
+
+.signIn {
+    color: rgba(0, 0, 0, 0.54);
+    padding: 0 16px 0 8px;
+}
+
+.wrapper {
+    height: calc(100vh - 64px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.element-container {
+    min-height: 90%;
+    min-width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    padding: 0;
+}
+
+.element {
+    padding: 0px;
+    width: 100%;
+    text-align: center;
+}
+
+.company-wrapper {
+    background: url(/assets/img/backgrounds/header.png) no-repeat 50% fixed;
+    background-size: cover;
+    transition: color 3000ms;
+}
+.company {
+    padding: 0.4em;
+    font-size: 3em;
+    color: white;
+    line-height: 3em;
+}
+.welcome-message {
+    /*color: rgba(0, 0, 0, 0.54);*/
+    color: white;
+}
+
+.content-wrapper {
+    /*    height: calc(100% - 9em);*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.content {
+    padding: 48px 0 24px 0;
+}
+.welcome-message-wrapper {
+    margin: auto;
+    max-width: 300px;
+}
+
+.signIn-buttons {
+    padding-top: 24px;
+}
+.signIn {
+    margin: 16px;
+}

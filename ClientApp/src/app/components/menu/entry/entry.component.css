@@ -1,0 +1,12 @@
+:host {
+    user-select: none;
+    padding: 12px 12px 12px 36px;
+    display: block;
+    cursor: pointer;
+    position: relative;
+}
+:host ::ng-deep mat-icon {
+    position: absolute;
+    top: 10px;
+    left: 0px;
+}

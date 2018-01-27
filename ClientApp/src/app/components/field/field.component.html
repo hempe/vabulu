@@ -1,0 +1,67 @@
+<div [ngSwitch]="type">
+    <div *ngSwitchCase="'email'">
+        <mat-icon *ngIf="icon">{{icon}}</mat-icon>
+        <mat-form-field [ngClass]="{'without-icon':!icon,'with-icon':icon}">
+            <input matInput type="{{type}}" placeholder="{{ name | translate }}" name="{{name}}" [(ngModel)]="value" (blur)="onBlur()"
+                (focus)="onFocus()" email [errorStateMatcher]="matcher">
+            <mat-error error [name]="name"></mat-error>
+        </mat-form-field>
+    </div>
+    <div *ngSwitchCase="'textarea'">
+        <mat-icon *ngIf="icon">{{icon}}</mat-icon>
+        <mat-form-field [ngClass]="{'without-icon':!icon,'with-icon':icon}">
+            <textarea matInput type="{{type}}" rows="10" placeholder="{{ name | translate }}" name="{{name}}" [(ngModel)]="value" (blur)="onBlur()"
+                (focus)="onFocus()" [errorStateMatcher]="matcher"></textarea>
+            <mat-error error [name]="name"></mat-error>
+        </mat-form-field>
+    </div>
+    <div *ngSwitchCase="'select'">
+        <mat-icon *ngIf="icon">{{icon}}</mat-icon>
+        <mat-form-field [ngClass]="{'without-icon':!icon,'with-icon':icon}">
+            <mat-select placeholder="{{ name | translate }}" name="{{name}}" [(ngModel)]="value" (blur)="onBlur()" (focus)="onFocus()"
+                [errorStateMatcher]="matcher">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let option of options" [value]="option.value">
+                    {{ option.name }}
+                </mat-option>
+            </mat-select>
+            <mat-error error [name]="name"></mat-error>
+        </mat-form-field>
+    </div>
+
+    <div *ngSwitchCase="'date'">
+        <mat-icon *ngIf="icon">{{icon}}</mat-icon>
+        <mat-form-field [ngClass]="{'without-icon':!icon,'with-icon':icon}">
+            <input matInput [matDatepicker]="picker" placeholder="{{ name | translate }}" name="{{name}}" [(ngModel)]="value" (blur)="onBlur()"
+                (focus)="onFocus()" [errorStateMatcher]="matcher" [min]="min" [max]="max">
+            <mat-error error [name]="name"></mat-error>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+    </div>
+
+    <div *ngSwitchCase="isInputType(type)">
+        <mat-icon *ngIf="icon">{{icon}}</mat-icon>
+        <mat-form-field [ngClass]="{'without-icon':!icon,'with-icon':icon}">
+            <input matInput type="{{type}}" placeholder="{{ name | translate }}" name="{{name}}" [(ngModel)]="value" (blur)="onBlur()"
+                (focus)="onFocus()" [errorStateMatcher]="matcher" [min]="min" [max]="max">
+            <mat-error error [name]="name"></mat-error>
+        </mat-form-field>
+    </div>
+
+    <div *ngSwitchCase="'readonly'">
+        <mat-icon *ngIf="icon">{{icon}}</mat-icon>
+        <mat-form-field [ngClass]="{'without-icon':!icon,'with-icon':icon}">
+            <input matInput type="text" readonly placeholder="{{ name | translate }}" name="{{name}}" [(ngModel)]="value" (blur)="onBlur()"
+                (focus)="onFocus()" [errorStateMatcher]="matcher" [min]="min" [max]="max">
+            <mat-error error [name]="name"></mat-error>
+        </mat-form-field>
+    </div>
+    <div *ngSwitchCase="'object'" class="ace">
+        <span class="ace-label">{{ name | translate }}</span>
+        <div ace-editor [(text)]="text" [mode]="'json'" [theme]="'chrome'" [options]="ace.options" [readOnly]="false" [autoUpdateContent]="true"
+            [durationBeforeCallback]="1000" style="min-height: 200px; width:100%; overflow: auto;"></div>
+        <div class="underline"></div>
+    </div>
+    <strong *ngSwitchDefault style="color:red">Unknown type '{{type}}'</strong>
+</div>

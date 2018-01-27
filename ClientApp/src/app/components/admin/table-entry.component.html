@@ -1,0 +1,41 @@
+<view-wrapper [head]="head" [button]="button">
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+        <div flexContainer>
+            <menu-left>
+                <menu-header>
+                    <menu-title>{{ table }}</menu-title>
+                </menu-header>
+                <menu-container>
+
+                    <mat-card-content flexContainer class="flex-container" *ngIf="meta && value">
+                        <ng-container *ngFor="let m of meta">
+                            <ng-container *ngIf="m.value != 'object'">
+                                <field [(ngModel)]="value.data[m.key]" name="{{m.key}}" type="{{m.value}}" flex=5></field>
+                            </ng-container>
+                        </ng-container>
+                        <ng-container *ngFor="let m of meta">
+                            <ng-container *ngIf="m.value == 'object'">
+                                <field [(ngModel)]="value.data[m.key]" name="{{m.key}}" type="{{m.value}}" flex=10></field>
+                            </ng-container>
+                        </ng-container>
+                    </mat-card-content>
+                </menu-container>
+            </menu-left>
+            <menu-right>
+                <menu-header>
+                    <menu-title>{{ 'Edit' | translate }}</menu-title>
+                </menu-header>
+                <menu-container style="position:relative;">
+                    <menu-entry (click)="onSubmit(f)" color="{{f.dirty ? color : 'rgba(0,0,0,0.54)' }}">
+                        {{'Save' | translate}}
+                        <mat-icon>save</mat-icon>
+                    </menu-entry>
+                    <menu-entry (click)="delete()">
+                        {{'Delete' | translate}}
+                        <mat-icon>delete_forever</mat-icon>
+                    </menu-entry>
+                </menu-container>
+            </menu-right>
+        </div>
+    </form>
+</view-wrapper>

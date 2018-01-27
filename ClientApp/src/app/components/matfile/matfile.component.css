@@ -1,0 +1,35 @@
+.drop-zone {
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    position: absolute;
+    top: calc(50% - 24px);
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.file-over {
+    background: rgba(0, 0, 0, 0.24);
+    opacity: 1 !important;
+}
+
+.hidden {
+    display: none;
+    height: 0px !important;
+    widows: 0px !important;
+    position: absolute;
+    right: 0;
+    left: 0;
+}
+
+.icon-size {
+    height: 100px !important;
+    width: 100px !important;
+    font-size: 100px !important;
+    color: rgba(33, 150, 243, 0.54) !important;
+    opacity: 0.5;
+}
+
+.drop-text {
+    color: rgba(0, 0, 0, 0.54);
+}

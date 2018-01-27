@@ -1,0 +1,54 @@
+<mat-toolbar class="user-bar">
+  <a class="company" (click)="goHome()">
+    <img src="/assets/img/logo/logo.svg" />
+  </a>
+  <a class="company" (click)="goHome()">Vabulu</a>
+  <span class="fill-remaining-space"></span>
+
+  <div *ngIf="configuraton.loggedIn && !loading">
+    <mat-menu #appMenu="matMenu">
+      <div class="mat-menu-items">
+        <button mat-menu-item (click)="gotoProfile()">
+          <mat-icon>account_circle</mat-icon> {{ 'Profile' | translate }}
+        </button>
+        <hr/>
+        <button mat-menu-item (click)="download('xlsx')">
+          <mat-icon>file_download</mat-icon> {{ 'ExportAsXlsx' | translate }}
+        </button>
+        <button mat-menu-item (click)="download('pdf')">
+          <mat-icon>file_download</mat-icon> {{ 'ExportAsPdf' | translate }}
+        </button>
+        <button mat-menu-item (click)="download('html')">
+          <mat-icon>file_download</mat-icon> {{ 'ExportAsHtml' | translate }}
+        </button>
+        <button mat-menu-item (click)="download('json')">
+          <mat-icon>file_download</mat-icon> {{ 'ExportAsJson' | translate }}
+        </button>
+        <hr/>
+        <button mat-menu-item (click)="upload()">
+          <mat-icon>file_upload</mat-icon> {{ 'ImportJson' | translate }}
+        </button>
+        <input type="file" accept=".json" #importFileInput (change)="importFileInputChanged($event)" style="display:none;" />
+        <hr/>
+        <button mat-menu-item (click)="signOut()">
+          <mat-icon>exit_to_app</mat-icon> Logout
+        </button>
+      </div>
+    </mat-menu>
+
+    <button mat-button [matMenuTriggerFor]="appMenu" [hidden]="!configuraton.loggedIn">
+      <img class="avatar" [src]="configuration.avatar">
+      <span class="user-name">{{ configuraton.profile && configuraton.profile.name && configuraton.profile.prename ? configuraton.profile.prename+"
+        "+configuraton.profile.name : configuraton.username }}</span>
+    </button>
+  </div>
+
+</mat-toolbar>
+
+<div *ngIf="configuraton.loggedIn && !loading">
+  <router-outlet></router-outlet>
+</div>
+<div *ngIf="!configuraton.loggedIn && !loading">
+  <login></login>
+</div>
+<iframe #iframe width="0" height="0" style="display:none;"></iframe>

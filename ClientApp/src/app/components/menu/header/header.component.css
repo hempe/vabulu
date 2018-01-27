@@ -1,0 +1,16 @@
+:host {
+    background: #fafafa;
+    font-weight: 400;
+    display: flex;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 20px;
+    padding-bottom: 21px;
+    display: flex;
+    position: relative;
+}
+:host ::ng-deep button {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+}

@@ -1,0 +1,35 @@
+mat-select {
+    margin-bottom: 1em;
+}
+
+.without-icon {
+    width: calc(100% - 16px);
+    margin-left: 16px;
+}
+.with-icon {
+    width: calc(100% - 44px);
+    margin-left: 8px;
+}
+mat-icon {
+    margin-left: 8px;
+}
+
+.ace-label {
+    color: rgba(0, 0, 0, 0.54);
+    cursor: default;
+    font-size: 11px;
+    line-height: 15.75px;
+    font-weight: 400;
+    white-space: nowrap;
+    pointer-events: none;
+}
+.ace {
+    margin-left: 16px;
+}
+.underline {
+    background-color: rgba(0, 0, 0, 0.42);
+    color: rgba(0, 0, 0, 0.54);
+    height: 1px;
+    line-height: normal;
+    margin-top: 16px;
+}

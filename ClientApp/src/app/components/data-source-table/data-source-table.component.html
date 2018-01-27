@@ -1,0 +1,43 @@
+<div>
+    <div class="header">
+        <mat-form-field class="search">
+            <input matInput #filter placeholder="{{ 'Filter' | translate }}">
+        </mat-form-field>
+        <mat-paginator #paginator [pageIndex]="0" [pageSize]="10"></mat-paginator>
+    </div>
+
+    <mat-table #table [dataSource]="dataSource" matSort [ngClass]="{'selectable':selectable}">
+        <ng-container *ngFor="let header of headers">
+            <ng-container matColumnDef="{{header.key}}">
+                <mat-header-cell *matHeaderCellDef translate mat-sort-header [ngClass]="header.type">{{ header.name | translate }}</mat-header-cell>
+                <mat-cell *matCellDef="let row" style="position:relative;line-height:46px" (click)="onSelected(row)" [ngClass]="header.type">
+                    <ng-container [ngSwitch]="header.type">
+                        <ng-container *ngSwitchCase="'icon'">
+                            <mat-icon>
+                                {{ header.map && header.map[row[header.key]] ? header.map[row[header.key]] : row[header.key] }}
+                            </mat-icon>
+                        </ng-container>
+                        <ng-container *ngSwitchDefault>
+                            <ng-container *ngIf="!editable">{{ row[header.key] }}</ng-container>
+                            <ng-container *ngIf="editable">
+                                <flat-field name="{{header.name}}" [(ngModel)]="row[header.key]" [type]="header.type" (change)="onChange(row)"></flat-field>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                </mat-cell>
+            </ng-container>
+        </ng-container>
+
+        <ng-container matColumnDef="" *ngIf="selectable">
+            <mat-header-cell *matHeaderCellDef class="checkbox-row">
+                <mat-checkbox class="checkbox" [(ngModel)]="checked" (change)="check($event)" [indeterminate]="indeterminate"></mat-checkbox>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" class="checkbox-row">
+                <mat-checkbox class="checkbox" (change)="setIndeterminate()" [(ngModel)]="row.checked"></mat-checkbox>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="cols"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: cols;"></mat-row>
+    </mat-table>
+</div>

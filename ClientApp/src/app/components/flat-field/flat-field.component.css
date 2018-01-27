@@ -1,0 +1,39 @@
+mat-select {
+    margin-bottom: 1em;
+}
+mat-icon {
+    margin-left: 8px;
+}
+
+.placeholder::-webkit-input-placeholder {
+    /* WebKit browsers */
+    color: rgba(0, 0, 0, 0.54) !important;
+}
+.placeholder:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: rgba(0, 0, 0, 0.54) !important;
+}
+.placeholder::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: rgba(0, 0, 0, 0.54) !important;
+}
+.placeholder:-ms-input-placeholder {
+    /* Internet Explorer 10+ */
+    color: rgba(0, 0, 0, 0.54) !important;
+}
+textarea.placeholder::-webkit-input-placeholder {
+    /* WebKit browsers */
+    color: rgba(0, 0, 0, 0.54) !important;
+}
+textarea.placeholder:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: rgba(0, 0, 0, 0.54) !important;
+}
+textarea.placeholder::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: rgba(0, 0, 0, 0.54) !important;
+}
+textarea.placeholder:-ms-input-placeholder {
+    /* Internet Explorer 10+ */
+    color: rgba(0, 0, 0, 0.54) !important;
+}

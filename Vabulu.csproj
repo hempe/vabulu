@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <LangVersion>7.1</LangVersion>
+    <RootNamespace>Vabulu</RootNamespace>
+    <AssemblyName>Vabulu</AssemblyName>
+    <PackageId>Vabulu</PackageId>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="EPPlus.Core" Version="1.5.4" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="1.1.0" />
+    <PackageReference Include="WindowsAzure.Storage" Version="8.6.0" />
+    <PackageReference Include="MimeMapping" Version="1.0.1.10" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0002" />
+    <PackageReference Include="Microsoft.AspNetCore.NodeServices" Version="2.0.1"/>
+    <PackageReference Include="Scriban" Version="1.0.0" />
+    <PackageReference Include="Sendgrid" Version="9.9.0" />
+    <PackageReference Include="Flurl" Version="2.6.0" />
+  </ItemGroup>
+  <ItemGroup>
+        <EmbeddedResource Include="Services\I18n\*.json" />
+        <EmbeddedResource Include="Templates\*" />
+        <Content Update="ClientApp\**" CopyToPublishDirectory="Never" />
+        <Content Update="Services\I18n\*.json" CopyToPublishDirectory="Never" />
+        <Content Update="Templates\*" CopyToPublishDirectory="Never" />
+  </ItemGroup>
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
+  </ItemGroup>
+  <!--
+  <PropertyGroup>
+    <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
+  </PropertyGroup>
+  -->
+  <Target Name="BuildManagementConsole" BeforeTargets="Build" Condition="'$(Configuration)' == 'Release' ">
+    <Exec Command="npm run build" WorkingDirectory="ClientApp" />
+  </Target>
+</Project>

@@ -1,0 +1,24 @@
+<div [ngSwitch]="type">
+    <div *ngSwitchCase="'email'">
+        <input class="placeholder" matInput type="{{type}}" placeholder="{{ name | translate }}" name="{{name}}" [(ngModel)]="value"
+            (blur)="onBlur()" email [errorStateMatcher]="matcher">
+        <mat-error error [name]="name"></mat-error>
+    </div>
+    <div *ngSwitchCase="'textarea'">
+        <textarea class="placeholder" matInput type="{{type}}" rows="10" placeholder="{{ name | translate }}" name="{{name}}" [(ngModel)]="value"
+            (blur)="onBlur()" [errorStateMatcher]="matcher"></textarea>
+        <mat-error error [name]="name"></mat-error>
+    </div>
+    <div *ngSwitchCase="'decimal'">
+        <input class="placeholder" matInput type="text" placeholder="{{ name | translate }}" name="{{name}}" [(ngModel)]="value"
+            (blur)="onBlur()" [errorStateMatcher]="matcher">
+        <mat-error error [name]="name"></mat-error>
+    </div>
+
+    <div *ngSwitchCase="isInputType(type)">
+        <input class="placeholder" matInput type="{{type}}" placeholder="{{ name | translate }}" name="{{name}}" [(ngModel)]="value"
+            (blur)="onBlur()" [errorStateMatcher]="matcher">
+        <mat-error error [name]="name"></mat-error>
+    </div>
+    <strong *ngSwitchDefault style="color:red">Unknown type '{{type}}'</strong>
+</div>

@@ -1,0 +1,100 @@
+/* You can add global styles to this file, and also import other style files */
+input[type='button'],
+input[type='submit'],
+input[type='reset'],
+button {
+    background-color: transparent;
+}
+
+body {
+    /*background:lightgray;*/
+    background: rgb(238, 238, 238);
+    margin: 0;
+    padding: 0;
+}
+app-root {
+    max-width: 100vw;
+    min-height: 100vh;
+    height: 100%;
+    /*
+    overflow-y: hidden;
+    overflow: hidden;
+    */
+    display: block;
+}
+fieldset {
+    border: none;
+}
+* {
+    font-family: 'roboto';
+}
+
+/* We dont want the user to select the page size" */
+.mat-paginator-page-size {
+    display: none !important;
+}
+
+.mat-select-underline {
+    height: 0.5px !important;
+}
+
+mat-row {
+    cursor: pointer;
+}
+mat-row:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+mat-dialog-container {
+    padding: 0 !important;
+}
+mat-header-row {
+    /*Do we want to see them or not*/
+    /*display: none !important;*/
+}
+
+.company,
+.company > span {
+    font-family: 'Comfortaa' !important;
+}
+
+mat-card {
+    background-color: white;
+}
+
+/************* NGX charts fixes *************/
+.ngx-charts-outer {
+    display: flex;
+}
+ngx-charts-pie-grid {
+    width: 100%;
+}
+
+.ace_content * {
+    font-family: monospace !important;
+}
+.ace_active-line {
+    background: transparent !important;
+}
+
+/** .cal-today override **/
+.cal-today .cal-day-number {
+    font-size: 1.2em !important;
+}
+
+.cal-today {
+    background: rgba(141, 38, 198, 0.1) !important;
+}
+.cal-event-title {
+    text-decoration: none;
+    color: white;
+    display: block;
+}
+
+.cal-cell-title {
+    border-radius: 5px;
+    padding: 0 10px;
+    line-height: 30px;
+    margin: 5px;
+    color: white;
+}

@@ -1,0 +1,7 @@
+<view-wrapper [head]="head" [button]="button">
+    <div flexContainer>
+        <menu-left>
+            <data-source-table [columns]="columns" [dataSourceFactory]="dataSource" (selected)="selected($event)"></data-source-table>
+        </menu-left>
+    </div>
+</view-wrapper>

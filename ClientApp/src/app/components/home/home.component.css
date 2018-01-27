@@ -1,0 +1,9 @@
+.wrapper {
+    padding: 12px;
+    width: calc(100% - 24px);
+}
+
+mwl-calendar-month-view::ng-deep .cal-days .cal-cell-row :nth-child(6n),
+mwl-calendar-month-view::ng-deep .cal-days .cal-cell-row :nth-child(7n) {
+    background: #fafafa;
+}

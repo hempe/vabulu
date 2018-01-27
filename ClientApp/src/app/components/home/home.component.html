@@ -1,0 +1,61 @@
+<view-wrapper [head]="head">
+    <div flexContainer>
+        <menu-left>
+            <menu-header>
+                <menu-title>{{ 'Kalender oder so' | translate }}: {{ getMonth() }} {{ getYear() }}
+
+                    <button mat-button (click)="view = view == 'month' ? 'week' : 'month'">
+                        Month/Week
+                    </button>
+                </menu-title>
+            </menu-header>
+            <menu-container>
+                <mat-card-content class="flex-container">
+                    <button mat-icon-button mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate">
+                        <mat-icon>chevron_left</mat-icon>
+                    </button>
+                    <button mat-button mwlCalendarToday [(viewDate)]="viewDate">
+                        {{ 'Today' | translate }}
+                    </button>
+                    <button mat-icon-button mwlCalendarNextView [view]="view" [(viewDate)]="viewDate">
+                        <mat-icon>chevron_right</mat-icon>
+                    </button>
+                    <div [ngSwitch]="view" flex=1>
+                        <mwl-calendar-month-view *ngSwitchCase="'month'" [refresh]="refresh" [viewDate]="viewDate" [events]="events" (eventClicked)="handleEvent($event.event)"
+                            (eventTimesChanged)="eventTimesChanged($event)" weekStartsOn="1" [cellTemplate]="customMonthDayTemplate">
+                        </mwl-calendar-month-view>
+                        <mwl-calendar-week-view *ngSwitchCase="'week'" [refresh]="refresh" [viewDate]="viewDate" [events]="events" (eventClicked)="handleEvent($event.event)"
+                            (eventTimesChanged)="eventTimesChanged($event)" weekStartsOn="1"></mwl-calendar-week-view>
+                    </div>
+                </mat-card-content>
+            </menu-container>
+        </menu-left>
+        <menu-right>
+            <menu-header>
+                <menu-title>{{ 'Edit' | translate }}</menu-title>
+            </menu-header>
+            <menu-container style="position:relative;">
+                <div *ngIf="event">
+                    <field [(ngModel)]="event.color" name="color" type="select" flex=3 [options]="colors"></field>
+                    <field [(ngModel)]="event.title" name="title" type="text" flex=3></field>
+                    <field [(ngModel)]="event.start" name="start" type="date" flex=3></field>
+                    <field [(ngModel)]="event.end" name="end" type="date" flex=3></field>
+                    <field [(ngModel)]="event.meta.comment" name="comment" type="textarea" flex=3></field>
+                    <button mat-raised-button color="primary" (click)="updateEvent()">Save</button>
+                </div>
+            </menu-container>
+        </menu-right>
+    </div>
+</view-wrapper>
+
+<ng-template #customMonthDayTemplate let-day="day" let-locale="locale">
+    <div>
+        <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+    </div>
+    <div *ngIf="day.events.length > 0">
+        <div (click)="handleEvent(event)" class="cal-cell-title" *ngFor="let event of day.events" [style.backgroundColor]="event.color.primary"
+            [ngClass]="event?.cssClass" mwlDraggable [dropData]="{event: event}" [dragAxis]="{x: event.draggable, y: event.draggable}">
+            {{ event.title }}
+        </div>
+    </div>
+</ng-template>

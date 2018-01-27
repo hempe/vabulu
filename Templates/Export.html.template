@@ -1,0 +1,113 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<style>
+    html,
+    body {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        font-family: "URW Gothic"
+    }
+
+    .title {
+        color: #008cb4;
+        font-size: 2em;
+        width: 100%;
+    }
+
+    .time {
+        color: #008cb4;
+        font-size: 0.8em;
+        width: 100%;
+    }
+
+    .sub-title {
+        color: black;
+        text-align: center;
+        font-size: 1.5em;
+        padding: 12px;
+        width: 100%;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size:.8em;
+    }
+
+    thead {
+        background: #008cb4;
+        color: white;
+    }
+
+    .content {
+        padding: 24px;
+    }
+
+    th {
+        font-weight: bold;
+    }
+
+    th,
+    td {
+        padding: 12px 24px;
+    }
+
+    th.group {
+        width: 25%;
+    }
+
+    td.group {
+        background: #e7f6fb;
+    }
+
+    th.name {
+        width: 37.5%;
+    }
+
+    th.addon {
+        width: 18.75%;
+
+    }
+
+    tr.odd {
+        background: #efefef;
+    }
+
+    .name {
+        text-align: left;
+    }
+
+    .addon {
+        text-align: center;
+    }
+
+    .amount {
+        text-align: right;
+    }
+    .sub-total {
+        border-top: 1px solid #008cb4;
+        color: #008cb4;
+    }
+    .total {
+        border-top: 2px solid #008cb4;
+        color: #008cb4;
+        font-weight: bold;
+    }
+    .page-break {
+        page-break-after: always;
+    }
+</style>
+
+
+
+<body>
+    <div class="content">
+    </div>
+</body>
+
+</html>
