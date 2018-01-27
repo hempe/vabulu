@@ -21,11 +21,12 @@
                         <mat-icon>chevron_right</mat-icon>
                     </button>
                     <div [ngSwitch]="view" flex=1>
-                        <mwl-calendar-month-view *ngSwitchCase="'month'" [refresh]="refresh" [viewDate]="viewDate" [events]="events" (eventClicked)="handleEvent($event.event)"
-                            (eventTimesChanged)="eventTimesChanged($event)" weekStartsOn="1" [cellTemplate]="customMonthDayTemplate">
+                        <mwl-calendar-month-view *ngSwitchCase="'month'" [refresh]="refresh" [viewDate]="viewDate" [events]="events" (eventClicked)="handleEvent($event.event, $event)"
+                            (eventTimesChanged)="eventTimesChanged($event)" weekStartsOn="1" [cellTemplate]="customMonthDayTemplate"
+                            (dayClicked)="dayClicked($event.day.date)">
                         </mwl-calendar-month-view>
-                        <mwl-calendar-week-view *ngSwitchCase="'week'" [refresh]="refresh" [viewDate]="viewDate" [events]="events" (eventClicked)="handleEvent($event.event)"
-                            (eventTimesChanged)="eventTimesChanged($event)" weekStartsOn="1"></mwl-calendar-week-view>
+                        <mwl-calendar-week-view *ngSwitchCase="'week'" [refresh]="refresh" [viewDate]="viewDate" [events]="events" (eventClicked)="handleEvent($event.event, $event)"
+                            (eventTimesChanged)="eventTimesChanged($event)" weekStartsOn="1" (dayHeaderClicked)="dayClicked($event.day.date)"></mwl-calendar-week-view>
                     </div>
                 </mat-card-content>
             </menu-container>
@@ -35,14 +36,19 @@
                 <menu-title>{{ 'Edit' | translate }}</menu-title>
             </menu-header>
             <menu-container style="position:relative;">
-                <div *ngIf="event">
-                    <field [(ngModel)]="event.color" name="color" type="select" flex=3 [options]="colors"></field>
-                    <field [(ngModel)]="event.title" name="title" type="text" flex=3></field>
-                    <field [(ngModel)]="event.start" name="start" type="date" flex=3></field>
-                    <field [(ngModel)]="event.end" name="end" type="date" flex=3></field>
-                    <field [(ngModel)]="event.meta.comment" name="comment" type="textarea" flex=3></field>
-                    <button mat-raised-button color="primary" (click)="updateEvent()">Save</button>
-                </div>
+                <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+                    <div *ngIf="event">
+                        <field [(ngModel)]="event.color" name="color" type="select" flex=3 [options]="colors"></field>
+                        <field [(ngModel)]="event.title" name="title" type="text" flex=3></field>
+                        <field [(ngModel)]="event.start" name="start" type="date" flex=3></field>
+                        <field [(ngModel)]="event.end" name="end" type="date" flex=3></field>
+                        <field [(ngModel)]="event.meta.comment" name="comment" type="textarea" flex=3></field>
+                        <menu-entry (click)="onSubmit(f)" color="{{f.dirty ? '#5926b0' : 'rgba(0,0,0,0.54)' }}">
+                            {{'Save' | translate}}
+                            <mat-icon>save</mat-icon>
+                        </menu-entry>
+                    </div>
+                </form>
             </menu-container>
         </menu-right>
     </div>
@@ -53,7 +59,7 @@
         <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
     </div>
     <div *ngIf="day.events.length > 0">
-        <div (click)="handleEvent(event)" class="cal-cell-title" *ngFor="let event of day.events" [style.backgroundColor]="event.color.primary"
+        <div (click)="handleEvent(event, $event)" class="cal-cell-title" *ngFor="let event of day.events" [style.backgroundColor]="event.color.primary"
             [ngClass]="event?.cssClass" mwlDraggable [dropData]="{event: event}" [dragAxis]="{x: event.draggable, y: event.draggable}">
             {{ event.title }}
         </div>
