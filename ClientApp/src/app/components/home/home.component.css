@@ -7,3 +7,11 @@ mwl-calendar-month-view::ng-deep .cal-days .cal-cell-row :nth-child(6n),
 mwl-calendar-month-view::ng-deep .cal-days .cal-cell-row :nth-child(7n) {
     background: #fafafa;
 }
+
+.cal-cell-title {
+    text-overflow: ellipsis;
+}
+
+mwl-calendar-month-view::ng-deep mwl-calendar-month-cell {
+    max-width: 14%.28;
+}

@@ -5,6 +5,11 @@ export function clone<T>(obj: T): T {
         return <any>JSON.parse(JSON.stringify(obj));
     return obj;
 }
+export function last<T>(array: T[]) {
+    if (array == null) return void undefined;
+    return array[array.length - 1];
+}
+
 export function array<T>(arr: T[]): T[] {
     let array = [];
     if (!arr) return [];

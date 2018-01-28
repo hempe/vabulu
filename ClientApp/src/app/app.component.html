@@ -37,7 +37,7 @@
     </mat-menu>
 
     <button mat-button [matMenuTriggerFor]="appMenu" [hidden]="!configuraton.loggedIn">
-      <img class="avatar" [src]="configuration.avatar">
+      <img class="avatar" src="/assets/img/avatars/noavatar.png">
       <span class="user-name">{{ configuraton.profile && configuraton.profile.name && configuraton.profile.prename ? configuraton.profile.prename+"
         "+configuraton.profile.name : configuraton.username }}</span>
     </button>

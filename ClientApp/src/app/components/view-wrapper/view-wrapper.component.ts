@@ -19,9 +19,6 @@ export interface MenuEntry {
     styleUrls: ['./view-wrapper.component.css']
 })
 export class ViewWrapperComponent implements OnInit {
-    public get color() {
-        return this.config.color;
-    }
     constructor(private router: Router, private config: ConfigurationService) {}
 
     @Input() public button: MenuEntry;

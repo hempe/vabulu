@@ -45,6 +45,7 @@ import { MaterialModule } from './app.material';
 import { MenuModule } from './components/menu/menu.module';
 import { MouseService } from './services/mouse';
 import { NgModule } from '@angular/core';
+import { NgxImageGalleryModule } from 'ngx-image-gallery';
 import { NumberWithSeperatorPipe } from './common/helper';
 import { ReloadOnResizeDirective } from './directives/reload-onresize/reload-onresize.directive';
 import { ResizeService } from './services/resize';
@@ -84,6 +85,7 @@ import { PdfRenderService } from './services/pdf-render';
         CalendarModule.forRoot(),
         MaterialModule,
         MenuModule,
+        NgxImageGalleryModule,
         FileUploadModule,
         CdkTableModule,
         ChartsModule,

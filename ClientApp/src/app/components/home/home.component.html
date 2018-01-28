@@ -1,5 +1,6 @@
 <view-wrapper [head]="head">
     <div flexContainer>
+        <!--
         <menu-left>
             <menu-header>
                 <menu-title>{{ 'Kalender oder so' | translate }}: {{ getMonth() }} {{ getYear() }}
@@ -51,6 +52,36 @@
                 </form>
             </menu-container>
         </menu-right>
+    -->
+
+        <menu-left>
+            <menu-header>
+                <menu-title>{{ 'Kalender oder so' | translate }}: {{ getMonth() }} {{ getYear() }}
+
+                    <button mat-button (click)="view = view == 'month' ? 'week' : 'month'">
+                        Month/Week
+                    </button>
+                </menu-title>
+            </menu-header>
+            <menu-container>
+
+                <ngx-image-gallery [images]="images" [conf]="conf" (onOpen)="galleryOpened($event)" (onClose)="galleryClosed()" (onImageClicked)="galleryImageClicked($event)"
+                    (onImageChange)="galleryImageChanged($event)" (onDelete)="deleteImage($event)"></ngx-image-gallery>
+
+            </menu-container>
+        </menu-left>
+
+        <menu-right>
+            <menu-header>
+                <menu-title>{{ 'Edit' | translate }}</menu-title>
+            </menu-header>
+            <menu-container style="position:relative;">
+                don't know
+
+                <mat-file color="primary" (onCompleteAll)="reloadFiles()" text="upload" [url]="uploadUrl"></mat-file>
+            </menu-container>
+        </menu-right>
+
     </div>
 </view-wrapper>
 

@@ -28,9 +28,8 @@ export const Colors = {
 
 @Injectable()
 export class ConfigurationService {
-    constructor(private translateService: TranslateService) {
-        this.resetColor();
-    }
+    constructor(private translateService: TranslateService) {}
+
     public get language(): string {
         let userLang = navigator.language || (<any>navigator).userLanguage;
         return userLang.split('-')[0];
@@ -38,46 +37,4 @@ export class ConfigurationService {
 
     public loggedIn: boolean;
     public username: string;
-
-    private _avatar: string = '/assets/img/avatars/noavatar.png';
-    public set avatar(val: string) {
-        if (val) {
-            val = val.split('?id=')[0];
-            this._avatar = `${val}?q=${makeid()}`;
-        } else {
-            this._avatar = '/assets/img/avatars/noavatar.png';
-        }
-    }
-
-    public get avatar(): string {
-        return this._avatar;
-    }
-
-    public get color() {
-        return this._color;
-    }
-
-    private _color: string;
-
-    private fallback = Colors.Cyan; //'#BAEC8E';
-    public setCustomColor(color: string) {
-        this.fallback = color;
-        this.resetColor();
-    }
-
-    public setColor(color?: string) {
-        color = Colors[color] || color;
-        let addon = 60;
-        try {
-            this._color = `rgba(${hexToRgb(color)
-                .map(x => (x + addon < 255 ? x + addon : 255))
-                .join(',')}, 0.6)`;
-        } catch (err) {
-            return color;
-        }
-    }
-
-    public resetColor() {
-        this.setColor();
-    }
 }
