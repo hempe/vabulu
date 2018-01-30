@@ -3,11 +3,13 @@ import { TableListComponent } from './components/admin/table-list.component';
 import { TableContentComponent } from './components/admin/table-content.component';
 import { TableEntryComponent } from './components/admin/table-entry.component';
 import { HomeComponent } from './components/home/home.component';
+import { PropertyComponent } from './components/property/property.component';
 import { Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 
 export const AppRoutes: Routes = [
     { path: 'home', component: HomeComponent },
+    { path: 'property/:propertyId', component: PropertyComponent },
     {
         path: 'admin',
         component: TableListComponent

@@ -38,6 +38,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { FlatFieldComponent } from './components/flat-field/flat-field.component';
 import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './components/home/home.component';
+import { PropertyComponent } from './components/property/property.component';
 import { KeyboardService } from './services/keyboard';
 import { LoginComponent } from './components/login/login.component';
 import { MatFileComponent } from './components/matfile/matfile.component';
@@ -63,6 +64,7 @@ import { PdfRenderService } from './services/pdf-render';
         FlatFieldComponent,
         LoginComponent,
         HomeComponent,
+        PropertyComponent,
         ReloadOnResizeDirective,
         FlexContainerDirective,
         FlexDirective,

@@ -15,14 +15,3 @@ mwl-calendar-month-view::ng-deep .cal-days .cal-cell-row :nth-child(7n) {
 mwl-calendar-month-view::ng-deep mwl-calendar-month-cell {
     max-width: 14%.28;
 }
-
-.blocked {
-    background-color: #e53935;
-    color: white;
-    width: 100%;
-    height: 100%;
-}
-
-.blocked::ng-deep > .cal-day-number {
-    color: white !important;
-}

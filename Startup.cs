@@ -78,6 +78,8 @@ namespace Vabulu {
 
             services.AddTransient<Services.I18n.TranslationService>();
 
+            services.AddTransient<Services.ImageService>();
+
             services.AddAuthentication()
                 .AddGoogle(option => {
                     option.ClientId = Configuration["Authentication:Google:ClientId"];

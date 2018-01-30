@@ -181,3 +181,10 @@ export function guid() {
         return v.toString(16);
     });
 }
+
+export function isFunction(v: any) {
+    if (v && v instanceof Function) {
+        return true;
+    }
+    return false;
+}

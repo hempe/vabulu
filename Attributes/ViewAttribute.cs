@@ -23,7 +23,7 @@ namespace Vabulu.Attributes {
             if (!string.IsNullOrWhiteSpace(partitionKey) && type.GetProperty(partitionKey).CanRead)
                 entity.PartitionKey = (string) type.GetProperty(partitionKey).GetValue(entity);
 
-            if (!string.IsNullOrWhiteSpace(rowKey) && type.GetProperty(partitionKey).CanRead)
+            if (!string.IsNullOrWhiteSpace(rowKey) && type.GetProperty(rowKey).CanRead)
                 entity.RowKey = (string) type.GetProperty(rowKey).GetValue(entity);
 
             return entity;

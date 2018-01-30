@@ -10,10 +10,9 @@
 header {
     min-height: 200px;
     max-height: 200px;
-    background: url(/assets/img/backgrounds/header.png) no-repeat 50% fixed;
-    background-blend-mode: color-burn;
-    background-size: cover;
-    transition: color 3000ms;
+    background: url(/assets/img/backgrounds/header.png) no-repeat center top
+        fixed #361e90;
+    background-size: 100% 100%;
 }
 
 :host {
