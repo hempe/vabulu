@@ -10,19 +10,14 @@ mwl-calendar-month-view::ng-deep .cal-days .cal-cell-row :nth-child(7n) {
 
 .cal-cell-title {
     text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 mwl-calendar-month-view::ng-deep mwl-calendar-month-cell {
-    max-width: 14%.28;
+    overflow: hidden;
 }
 
-.blocked {
-    background-color: #e53935;
-    color: white;
-    width: 100%;
-    height: 100%;
-}
-
-.blocked::ng-deep > .cal-day-number {
-    color: white !important;
+.calendar {
+    min-height: 500px;
 }

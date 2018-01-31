@@ -28,27 +28,68 @@ export class ViewWrapperComponent implements OnInit {
     @Input() public groups: MenuGroup[];
 
     ngOnInit() {
-        this.groups = [
-            {
-                entries: [
-                    {
-                        name: 'Home',
-                        icon: 'home',
-                        action: () => this.router.navigate(['/home'])
-                    }
-                ]
-            },
-            {
-                name: 'Admin',
-                entries: [
-                    {
-                        name: 'Admin',
-                        icon: 'settings',
-                        action: () => this.router.navigate(['admin'])
-                    }
-                ]
-            }
-        ];
+        if (this.config.roles.includes('admin')) {
+            this.groups = [
+                {
+                    entries: [
+                        {
+                            name: 'Home',
+                            icon: 'home',
+                            action: () => this.router.navigate(['/home'])
+                        }
+                    ]
+                },
+                {
+                    name: 'Admin',
+                    entries: [
+                        {
+                            name: 'Admin',
+                            icon: 'settings',
+                            action: () => this.router.navigate(['admin'])
+                        },
+                        {
+                            name: 'Properties',
+                            icon: 'store_mall_directory',
+                            action: () => this.router.navigate(['property'])
+                        }
+                    ]
+                }
+            ];
+        } else if (this.config.roles.includes('edit')) {
+            this.groups = [
+                {
+                    entries: [
+                        {
+                            name: 'Home',
+                            icon: 'home',
+                            action: () => this.router.navigate(['/home'])
+                        }
+                    ]
+                },
+                {
+                    name: 'Admin',
+                    entries: [
+                        {
+                            name: 'Properties',
+                            icon: 'store_mall_directory',
+                            action: () => this.router.navigate(['property'])
+                        }
+                    ]
+                }
+            ];
+        } else if (this.config.roles.includes('user')) {
+            this.groups = [
+                {
+                    entries: [
+                        {
+                            name: 'Home',
+                            icon: 'home',
+                            action: () => this.router.navigate(['/home'])
+                        }
+                    ]
+                }
+            ];
+        }
     }
 
     public noAction() {}

@@ -18,7 +18,7 @@ using Vabulu.Views;
 namespace Vabulu.Controllers {
 
     [Route("api/property")]
-    [Authorize]
+    [Authorize(Roles = "user, edit, admin")]
     public class EventController : BaseController {
         public EventController(UserManager<User> userManager, TableStore tableStore) : base(userManager, tableStore) { }
 

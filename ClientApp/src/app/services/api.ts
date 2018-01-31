@@ -107,6 +107,7 @@ export class ApiService {
                         x = x ? x : {};
                         this.configuration.loggedIn = x.loggedIn;
                         this.configuration.username = x.userName;
+                        this.configuration.roles = x.roles;
                         resolve(true);
                     },
                     err => {

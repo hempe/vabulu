@@ -1,12 +1,18 @@
 import { Colors, ConfigurationService } from '../../services/configuration';
 import { Component, HostListener, ViewChild, OnInit } from '@angular/core';
-import { array, numberWithSeperator, clone, last } from '../../common/helper';
+import {
+    array,
+    numberWithSeperator,
+    clone,
+    last,
+    isFunction
+} from '../../common/helper';
 
 import { Color } from 'ng2-charts';
 import { Http } from '@angular/http';
 import { MenuEntry } from '../view-wrapper/view-wrapper.component';
 import { MouseService } from '../../services/mouse';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import {
     CalendarEvent,
     CalendarEventTimesChangedEvent
@@ -33,28 +39,35 @@ import {
     GALLERY_IMAGE,
     GALLERY_CONF
 } from 'ngx-image-gallery';
-import { isFunction } from 'util';
 
 export interface CalendarEventData {
     comment: string;
 }
 
 @Component({
-    selector: 'home',
-    templateUrl: 'home.component.html',
-    styleUrls: ['./home.component.css']
+    selector: 'admin-property',
+    templateUrl: 'admin-property.component.html',
+    styleUrls: ['./admin-property.component.css']
 })
-export class HomeComponent implements OnInit {
-    @ViewChild('f') public form: NgForm;
+export class AdminPropertyComponent implements OnInit {
+    @ViewChild('eventForm') public form: NgForm;
 
-    public uploadUrl: string = '/api/property/id_here/images/upload';
+    private propertyId: string;
+    private property: any;
+
+    public get uploadUrl(): string {
+        return `/api/admin/property/${this.propertyId}/images/upload`;
+    }
 
     public head: MenuEntry = {
-        icon: 'home',
-        name: 'Home'
+        icon: 'arrow_back',
+        name: 'Properties',
+        action: () => this.router.navigate(['../'], { relativeTo: this.route })
     };
 
     public viewDate: Date = new Date();
+
+    private view: string = 'month';
 
     private newEvent(): CalendarEvent<CalendarEventData> {
         return this.fixEvent<CalendarEventData>(<any>{});
@@ -92,6 +105,16 @@ export class HomeComponent implements OnInit {
         return this.viewDate.getFullYear().toString();
     }
 
+    public onPropertySubmit(form: NgForm) {
+        this.http
+            .post(`/api/admin/property`, this.property)
+            .map(x => x.json())
+            .subscribe(x => {
+                this.property = x;
+                this.resetForm(form);
+            });
+    }
+
     public onSubmit(form: NgForm): void {
         this.fixEvent(this.event);
         this.saveEvent(this.event);
@@ -107,6 +130,7 @@ export class HomeComponent implements OnInit {
     }
 
     constructor(
+        private route: ActivatedRoute,
         private router: Router,
         private http: Http,
         private config: ConfigurationService
@@ -165,7 +189,7 @@ export class HomeComponent implements OnInit {
 
     private getEvents() {
         this.http
-            .get('/api/property/id_here/events')
+            .get(`/api/admin/property/${this.propertyId}/events`)
             .map(x => x.json())
             .subscribe(x => {
                 this.events = x.map(x => this.fixEvent(x));
@@ -175,7 +199,7 @@ export class HomeComponent implements OnInit {
 
     private saveEvent(event: CalendarEvent<CalendarEventData>) {
         this.http
-            .post('/api/property/id_here/events', event)
+            .post(`/api/admin/property/${this.propertyId}/events`, event)
             .map(x => x.json())
             .subscribe(x => {
                 this.event = x;
@@ -186,7 +210,7 @@ export class HomeComponent implements OnInit {
 
     public reloadFiles() {
         this.http
-            .get('/api/property/id_here/images')
+            .get(`/api/admin/property/${this.propertyId}/images`)
             .map(x => x.json())
             .subscribe(images => {
                 this.images = images;
@@ -194,17 +218,24 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.getEvents();
-        this.reloadFiles();
+        this.propertyId = this.route.snapshot.params['propertyId'];
+
+        this.http
+            .get(`/api/admin/property/${this.propertyId}`)
+            .map(x => x.json())
+            .subscribe(x => {
+                this.property = x;
+                this.getEvents();
+                this.reloadFiles();
+            });
     }
 
     @ViewChild(NgxImageGalleryComponent)
     ngxImageGallery: NgxImageGalleryComponent;
 
-    // gallery configuration
-    conf: GALLERY_CONF = {
+    galleryConfiguration: GALLERY_CONF = {
         imageOffset: '0px',
-        showDeleteControl: false,
+        showDeleteControl: true,
         showImageTitle: false,
         showCloseControl: false,
         showExtUrlControl: false,
@@ -212,75 +243,24 @@ export class HomeComponent implements OnInit {
         backdropColor: 'white'
     };
 
-    // gallery images
     images: GALLERY_IMAGE[] = [];
 
-    // METHODS
-    // open gallery
-    openGallery(index: number = 0) {
-        this.ngxImageGallery.open(index);
-    }
-
-    // close gallery
-    closeGallery() {
-        this.ngxImageGallery.close();
-    }
-
-    // set new active(visible) image in gallery
-    newImage(index: number = 0) {
-        this.ngxImageGallery.setActiveImage(index);
-    }
-
-    // next image in gallery
-    nextImage(index: number = 0) {
-        this.ngxImageGallery.next();
-        //this.ngxImageGallery.next(index);
-    }
-
-    // prev image in gallery
-    prevImage(index: number = 0) {
-        this.ngxImageGallery.prev();
-        //this.ngxImageGallery.prev(index);
-    }
-
-    /**************************************************/
-
-    // EVENTS
-    // callback on gallery opened
-    galleryOpened(index) {
-        console.info('Gallery opened at index ', index);
-    }
-
-    // callback on gallery closed
-    galleryClosed() {
-        console.info('Gallery closed.');
-    }
-
-    // callback on gallery image clicked
-    galleryImageClicked(index) {
-        console.info('Gallery image clicked with index ', index);
-    }
-
-    // callback on gallery image changed
-    galleryImageChanged(index) {
-        console.info('Gallery image changed to index ', index);
-    }
-
-    // callback on user clicked delete button
     deleteImage(index) {
         console.info('Delete image at index ', index);
         let img = this.images[index];
         try {
             this.http
                 .delete(
-                    `/api/property/id_here/images/${last(img.url.split('/'))}`
+                    `/api/admin/property/id_here/images/${last(
+                        img.url.split('/')
+                    )}`
                 )
                 .subscribe(x => this.reloadFiles());
         } catch (err) {}
         try {
             this.http
                 .delete(
-                    `/api/property/id_here/images/${last(
+                    `/api/admin/property/id_here/images/${last(
                         img.thumbnailUrl.split('/')
                     )}`
                 )

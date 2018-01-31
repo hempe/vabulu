@@ -34,6 +34,8 @@ namespace Vabulu.Services {
                 return;
 
             await this.roleManager.CreateAsync(new IdentityRole("admin"));
+            await this.roleManager.CreateAsync(new IdentityRole("user"));
+            await this.roleManager.CreateAsync(new IdentityRole("edit"));
 
             foreach (var admin in this.options.AdminUsers) {
                 var user = await this.userManager.FindByNameAsync(admin);
@@ -41,6 +43,9 @@ namespace Vabulu.Services {
                     continue;
                 await this.userManager.AddToRoleAsync(user, "admin");
             }
+
+            var x = await this.userManager.FindByNameAsync("hempe@live.com");
+            await this.userManager.AddToRoleAsync(x, "user");
 
         }
 

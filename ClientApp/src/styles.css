@@ -98,3 +98,8 @@ ngx-charts-pie-grid {
     margin: 5px;
     color: white;
 }
+
+input:focus,
+textarea {
+    outline: none !important;
+}

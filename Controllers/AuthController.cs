@@ -45,7 +45,7 @@ namespace Vabulu.Controllers {
             var user = new User() { Email = model.Email, UserName = model.Email };
             var created = await this.UserManager.CreateAsync(user, model.Password);
             if (created.Succeeded) {
-                await this.signInManager.SignInAsync(user, isPersistent: false);
+                await this.signInManager.SignInAsync(user, isPersistent : false);
                 await this.RequestEmailConfirmationAsync(mailService, translationService, user, model.Language);
                 return this.Ok();
             }
@@ -63,7 +63,7 @@ namespace Vabulu.Controllers {
                 return this.BadRequest("Already signed in");
 
             // lockoutOnFailure: true
-            var result = await this.signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+            var result = await this.signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure : false);
             if (result.Succeeded) {
                 return this.Ok();
             }
@@ -93,12 +93,13 @@ namespace Vabulu.Controllers {
         public IActionResult UserInfo() {
             if (!this.User.Identity.IsAuthenticated)
                 return this.Ok(new {
-                    loggedIn = false
+                    loggedIn = false,
                 });
 
             return this.Ok(new {
                 loggedIn = true,
-                    UserName = this.User.Identity.Name
+                    UserName = this.User.Identity.Name,
+                    Roles = this.User.Claims.Where(x => x.Type == ClaimTypes.Role).Select(x => x.Value).ToList()
             });
         }
 
@@ -136,7 +137,7 @@ namespace Vabulu.Controllers {
             }
             var claims = info.Principal.Claims.ToList();
 
-            var result = await this.signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: true);
+            var result = await this.signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent : true);
             if (result.Succeeded) {
                 await this.signInManager.UpdateExternalAuthenticationTokensAsync(info);
                 return this.RedirectToLocal(returnUrl);
@@ -155,7 +156,7 @@ namespace Vabulu.Controllers {
                 if (created.Succeeded) {
                     created = await this.UserManager.AddLoginAsync(user, info);
                     if (created.Succeeded) {
-                        await this.signInManager.SignInAsync(user, isPersistent: false);
+                        await this.signInManager.SignInAsync(user, isPersistent : false);
                         //_logger.LogInformation(6, "User created an account using {Name} provider.", info.LoginProvider);
                         await this.signInManager.UpdateExternalAuthenticationTokensAsync(info);
                         return this.RedirectToLocal(returnUrl);

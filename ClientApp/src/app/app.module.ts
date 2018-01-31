@@ -37,8 +37,12 @@ import { FieldComponent } from './components/field/field.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { FlatFieldComponent } from './components/flat-field/flat-field.component';
 import { FormsModule } from '@angular/forms';
-import { HomeComponent } from './components/home/home.component';
+
 import { PropertyComponent } from './components/property/property.component';
+import { PropertyListComponent } from './components/property/property-list.component';
+
+import { AdminPropertyComponent } from './components/admin-property/admin-property.component';
+import { AdminPropertyListComponent } from './components/admin-property/admin-property-list.component';
 import { KeyboardService } from './services/keyboard';
 import { LoginComponent } from './components/login/login.component';
 import { MatFileComponent } from './components/matfile/matfile.component';
@@ -55,6 +59,7 @@ import { ViewWrapperComponent } from './components/view-wrapper/view-wrapper.com
 import { WarnMissingTranslationHandler } from './services/warn-missing-translation-handler';
 import { httpFactory } from './services/http-interceptor';
 import { PdfRenderService } from './services/pdf-render';
+import { Autosize } from '../../node_modules/angular2-autosize/src/autosize.directive';
 
 @NgModule({
     declarations: [
@@ -63,8 +68,10 @@ import { PdfRenderService } from './services/pdf-render';
         FieldComponent,
         FlatFieldComponent,
         LoginComponent,
-        HomeComponent,
         PropertyComponent,
+        PropertyListComponent,
+        AdminPropertyComponent,
+        AdminPropertyListComponent,
         ReloadOnResizeDirective,
         FlexContainerDirective,
         FlexDirective,
@@ -76,7 +83,8 @@ import { PdfRenderService } from './services/pdf-render';
         TableListComponent,
         TableContentComponent,
         TableEntryComponent,
-        MatFileComponent
+        MatFileComponent,
+        Autosize
     ],
     entryComponents: [MatFileComponent],
     imports: [

@@ -19,7 +19,7 @@ import { Subscription } from 'rxjs/Subscription';
     styleUrls: ['./right.component.css']
 })
 export class MenuRightComponent {
-    private _noTop = false;
+    private _noTop = true;
     @Input()
     public set noTop(value: boolean) {
         this._noTop = value == true || <any>value == 'true';

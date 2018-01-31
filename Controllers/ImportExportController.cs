@@ -10,7 +10,7 @@ using Vabulu.Services.Export;
 namespace Vabulu.Controllers {
 
     [Route("api/export")]
-    [Authorize]
+    [Authorize(Roles = "user, edit, admin")]
     public class ImportController : BaseController {
         public ImportController(UserManager<User> userManager, TableStore tableStore) : base(userManager, tableStore) { }
 

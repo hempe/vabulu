@@ -37,4 +37,5 @@ export class ConfigurationService {
 
     public loggedIn: boolean;
     public username: string;
+    public roles: string[];
 }

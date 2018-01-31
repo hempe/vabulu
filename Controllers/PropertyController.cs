@@ -22,7 +22,7 @@ using Vabulu.Services;
 namespace Vabulu.Controllers {
 
     [Route("api/property")]
-    [Authorize]
+    [Authorize(Roles = "user, edit, admin")]
     public class PropertyController : BaseController {
         private readonly ImageService imageService;
         public PropertyController(UserManager<User> userManager, TableStore tableStore, ImageService imageService) : base(userManager, tableStore) {
