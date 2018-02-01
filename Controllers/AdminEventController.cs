@@ -25,7 +25,7 @@ namespace Vabulu.Controllers {
         [HttpGet("{propertyId}/events")]
         [ProducesResponseType(typeof(CalendarEvent[]), 200)]
         public async Task<IActionResult> Get([FromRoute] string propertyId) {
-            var values = await this.TableStore.GetAllAsync<Tables.CalendarEvent>(new Args { { nameof(Tables.CalendarEvent.PropertyId), propertyId } });
+            var values = await this.TableStore.GetAllAsync(Args<Tables.CalendarEvent>.Where(x => x.PropertyId, propertyId));
             return this.Ok(values.Select(x =>(CalendarEvent) x));
         }
 

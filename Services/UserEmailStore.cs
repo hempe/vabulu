@@ -16,9 +16,9 @@ namespace Vabulu.Services {
     internal partial class UserStore : IUserEmailStore<User> {
         public async Task<User> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken) {
             var entity =
-                await this.tableStore.GetAsync<UserEntity>(new Args { { nameof(UserEntity.NormalizedEmail), normalizedEmail } }) ??
-                await this.tableStore.GetAsync<UserEntity>(new Args { { nameof(UserEntity.Email), normalizedEmail } }) ??
-                await this.tableStore.GetAsync<UserEntity>(new Args { { nameof(UserEntity.NormalizedUserName), normalizedEmail } });
+                await this.tableStore.GetAsync(Args<UserEntity>.Where(x => x.NormalizedEmail, normalizedEmail)) ??
+                await this.tableStore.GetAsync(Args<UserEntity>.Where(x => x.Email, normalizedEmail)) ??
+                await this.tableStore.GetAsync(Args<UserEntity>.Where(x => x.NormalizedUserName, normalizedEmail));
             return entity;
         }
 

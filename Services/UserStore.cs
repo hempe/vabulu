@@ -68,9 +68,7 @@ namespace Vabulu.Services {
         }
 
         public async Task<User> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken) {
-            var entity = await this.tableStore.GetAsync<UserEntity>(
-                new Args { { nameof(UserEntity.NormalizedUserName), normalizedUserName }
-                });
+            var entity = await this.tableStore.GetAsync(Args<UserEntity>.Where(x => x.NormalizedUserName, normalizedUserName));
             return entity;
         }
 
@@ -104,9 +102,7 @@ namespace Vabulu.Services {
         }
 
         private async Task<List<Token>> GetTokensAsync(User user) {
-            var entities = await this.tableStore.GetAllAsync<Token>(
-                new Args { { nameof(Token.UserId), user.Id } }
-            );
+            var entities = await this.tableStore.GetAllAsync(Args<Token>.Where(x => x.UserId, user.Id));
             return entities;
         }
     }

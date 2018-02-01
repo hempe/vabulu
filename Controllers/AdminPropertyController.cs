@@ -32,7 +32,7 @@ namespace Vabulu.Controllers {
         [HttpGet("")]
         [ProducesResponseType(typeof(Property[]), 200)]
         public async Task<IActionResult> GetAll() {
-            var values = await this.TableStore.GetAllAsync<Tables.Property>(new Args { });
+            var values = await this.TableStore.GetAllAsync<Tables.Property>();
             return this.Ok(values.Select(x =>(Property) x));
         }
 

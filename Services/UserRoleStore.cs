@@ -24,7 +24,7 @@ namespace Vabulu.Services {
         }
 
         public async Task<IList<string>> GetRolesAsync(User user, CancellationToken cancellationToken) {
-            var entities = await this.tableStore.GetAllAsync<UserRoleEntity>(new Args { { nameof(UserRoleEntity.UserId), user.Id } });
+            var entities = await this.tableStore.GetAllAsync(Args<UserRoleEntity>.Where(x => x.UserId, user.Id));
             if (entities == null)
                 return null;
             var roles = new List<string>();
@@ -33,7 +33,7 @@ namespace Vabulu.Services {
 
         public async Task<IList<User>> GetUsersInRoleAsync(string normalizedRoleName, CancellationToken cancellationToken) {
             var roleName = await this.GetRoleNameAsync(normalizedRoleName);
-            var entities = await this.tableStore.GetAllAsync<UserRoleEntity>(new Args { { nameof(UserRoleEntity.RoleName), roleName } });
+            var entities = await this.tableStore.GetAllAsync(Args<UserRoleEntity>.Where(x => x.RoleName, roleName));
             if (entities == null)
                 return null;
             var users = new List<User>();
@@ -59,9 +59,7 @@ namespace Vabulu.Services {
         }
 
         private async Task<string> GetRoleNameAsync(string normalizedRoleName) {
-            var entity = await this.tableStore.GetAsync<RoleEntity>(
-                new Args { { nameof(RoleEntity.NormalizedName), normalizedRoleName }
-                });
+            var entity = await this.tableStore.GetAsync(Args<RoleEntity>.Where(x => x.NormalizedName, normalizedRoleName));
             return entity?.Name ?? normalizedRoleName;
         }
     }

@@ -45,7 +45,7 @@ namespace Vabulu.Controllers {
         public async Task<IActionResult> GetAll([FromRoute] string tableName) {
             var table = this.FindTableType(tableName);
             var users = await this.GetUserMappingAsync();
-            var all = await this.TableStore.GetAllAsync(table, new Args { });
+            var all = await this.TableStore.GetAllAsync(table);
             var cleaned = this.ToTableEntries(table, all, false, users);
             return this.Ok(cleaned);
         }
@@ -198,7 +198,7 @@ namespace Vabulu.Controllers {
         }
 
         private async Task<Dictionary<string, string>> GetUserMappingAsync() {
-            var all = await this.TableStore.GetAllAsync<UserLookupEntity>(new Args { });
+            var all = await this.TableStore.GetAllAsync<UserLookupEntity>();
             return all.ToDictionary(x => x.UserId, x => x.UserName);
         }
 

@@ -36,10 +36,7 @@ namespace Vabulu.Services {
         }
 
         public async Task<IList<UserLoginInfo>> GetLoginsAsync(User user, CancellationToken cancellationToken) {
-            var entities = await this.tableStore.GetAllAsync<LoginInfo>(
-                new Args { { nameof(LoginInfo.UserId), user.Id } }
-            );
-
+            var entities = await this.tableStore.GetAllAsync(Args<LoginInfo>.Where(x => x.UserId, user.Id));
             return entities.Select(x =>(UserLoginInfo) x).ToList();
         }
 

@@ -4,6 +4,7 @@ using Microsoft.WindowsAzure.Storage.Table; // Namespace for Table storage types
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
@@ -18,6 +19,36 @@ namespace Vabulu.Services {
     }
 
     public class Args : Dictionary<string, string> { }
+
+    public class Args<T> : Args {
+
+        public static Args<T> Where(Expression<Func<T, string>> expression, string value) {
+            return new Args<T> { { Check.GetPropertyName(expression), value } };
+        }
+    }
+
+    public static class ArgsExtensions {
+        public static Args<T> And<T>(this Args<T> args, Expression<Func<T, string>> expression, string value) {
+            args[Check.GetPropertyName(expression)] = value;
+            return args;
+        }
+
+        public static Args As(this Args arguments, Type type) {
+            var args = (Args) Activator.CreateInstance(typeof(Args<>).MakeGenericType(type));
+            if (arguments == null)
+                return args;
+            foreach (var key in arguments.Keys) {
+                if (type.GetProperty(key) == null)
+                    throw new NotSupportedException($"Property {key} does not exist on type {type.Name}");
+                args[key] = arguments[key];
+            }
+            return args;
+        }
+
+        public static Args<T> As<T>(this Args args) {
+            return (Args<T>) args.As(typeof(T));
+        }
+    }
 
     public class TableStore {
         private static readonly Dictionary<Type, CloudTable> Tables;
@@ -94,18 +125,20 @@ namespace Vabulu.Services {
             }
         }
 
-        public async Task<T> GetAsync<T>(Args parameter) where T : class, ITableEntity, new() {
+        public async Task<T> GetAsync<T>(Args<T> parameter = null) where T : class, ITableEntity, new() {
             var type = typeof(T);
             var table = await this.GetViewAsync(type);
             string filter = null;
             var attribute = this.GetViewAttribute(type);
-            foreach (var kv in parameter) {
-                var propertyName = attribute.PropertyName(type, kv.Key);
-                var condition = TableQuery.GenerateFilterCondition(propertyName, QueryComparisons.Equal, kv.Value);
-                if (filter == null)
-                    filter = condition;
-                else
-                    filter = TableQuery.CombineFilters(filter, TableOperators.And, condition);
+            if (parameter != null) {
+                foreach (var kv in parameter) {
+                    var propertyName = attribute.PropertyName(type, kv.Key);
+                    var condition = TableQuery.GenerateFilterCondition(propertyName, QueryComparisons.Equal, kv.Value);
+                    if (filter == null)
+                        filter = condition;
+                    else
+                        filter = TableQuery.CombineFilters(filter, TableOperators.And, condition);
+                }
             }
 
             var query = new TableQuery<T>().Where(filter).Take(1);
@@ -124,18 +157,20 @@ namespace Vabulu.Services {
             return re;
         }
 
-        public async Task<List<T>> GetAllAsync<T>(Args parameter) where T : class, ITableEntity, new() {
+        public async Task<List<T>> GetAllAsync<T>(Args<T> parameter = null) where T : class, ITableEntity, new() {
             string filter = null;
             var type = typeof(T);
             var table = await this.GetViewAsync(type);
             var attribute = this.GetViewAttribute(type);
-            foreach (var kv in parameter) {
-                var propertyName = attribute.PropertyName(type, kv.Key);
-                var condition = TableQuery.GenerateFilterCondition(propertyName, QueryComparisons.Equal, kv.Value);
-                if (filter == null)
-                    filter = condition;
-                else
-                    filter = TableQuery.CombineFilters(filter, TableOperators.And, condition);
+            if (parameter != null) {
+                foreach (var kv in parameter) {
+                    var propertyName = attribute.PropertyName(type, kv.Key);
+                    var condition = TableQuery.GenerateFilterCondition(propertyName, QueryComparisons.Equal, kv.Value);
+                    if (filter == null)
+                        filter = condition;
+                    else
+                        filter = TableQuery.CombineFilters(filter, TableOperators.And, condition);
+                }
             }
 
             var query = new TableQuery<T>();
@@ -154,25 +189,27 @@ namespace Vabulu.Services {
             return re;
         }
 
-        public Task<List<ITableEntity>> GetAllAsync(Type type, Args parameter) {
-            return (Task<List<ITableEntity>>) this.GetType().GetMethod(nameof(this.GetAllTableEntitesAsync), BindingFlags.Instance | BindingFlags.NonPublic).MakeGenericMethod(new [] { type }).Invoke(this, new [] { parameter });
+        public Task<List<ITableEntity>> GetAllAsync(Type type, Args parameter = null) {
+            return (Task<List<ITableEntity>>) this.GetType().GetMethod(nameof(this.GetAllTableEntitesAsync), BindingFlags.Instance | BindingFlags.NonPublic).MakeGenericMethod(new [] { type }).Invoke(this, new [] { parameter.As(type) });
         }
-        public Task<ITableEntity> GetAsync(Type type, Args parameter) {
-            return (Task<ITableEntity>) this.GetType().GetMethod(nameof(this.GetEntityAsync), BindingFlags.Instance | BindingFlags.NonPublic).MakeGenericMethod(new [] { type }).Invoke(this, new [] { parameter });
+        public Task<ITableEntity> GetAsync(Type type, Args parameter = null) {
+            return (Task<ITableEntity>) this.GetType().GetMethod(nameof(this.GetEntityAsync), BindingFlags.Instance | BindingFlags.NonPublic).MakeGenericMethod(new [] { type }).Invoke(this, new [] { parameter.As(type) });
         }
 
-        private async Task<ITableEntity> GetEntityAsync<T>(Args parameter) where T : class, ITableEntity, new() {
+        private async Task<ITableEntity> GetEntityAsync<T>(Args<T> parameter = null) where T : class, ITableEntity, new() {
             var type = typeof(T);
             var table = await this.GetViewAsync(type);
             string filter = null;
             var attribute = this.GetViewAttribute(type);
-            foreach (var kv in parameter) {
-                var propertyName = attribute.PropertyName(type, kv.Key);
-                var condition = TableQuery.GenerateFilterCondition(propertyName, QueryComparisons.Equal, kv.Value);
-                if (filter == null)
-                    filter = condition;
-                else
-                    filter = TableQuery.CombineFilters(filter, TableOperators.And, condition);
+            if (parameter != null) {
+                foreach (var kv in parameter) {
+                    var propertyName = attribute.PropertyName(type, kv.Key);
+                    var condition = TableQuery.GenerateFilterCondition(propertyName, QueryComparisons.Equal, kv.Value);
+                    if (filter == null)
+                        filter = condition;
+                    else
+                        filter = TableQuery.CombineFilters(filter, TableOperators.And, condition);
+                }
             }
 
             var query = new TableQuery<T>().Where(filter).Take(1);
@@ -191,18 +228,20 @@ namespace Vabulu.Services {
             return re;
         }
 
-        private async Task<List<ITableEntity>> GetAllTableEntitesAsync<T>(Args parameter) where T : class, ITableEntity, new() {
+        private async Task<List<ITableEntity>> GetAllTableEntitesAsync<T>(Args<T> parameter = null) where T : class, ITableEntity, new() {
             string filter = null;
             var type = typeof(T);
             var table = await this.GetViewAsync(type);
             var attribute = this.GetViewAttribute(type);
-            foreach (var kv in parameter) {
-                var propertyName = attribute.PropertyName(type, kv.Key);
-                var condition = TableQuery.GenerateFilterCondition(propertyName, QueryComparisons.Equal, kv.Value);
-                if (filter == null)
-                    filter = condition;
-                else
-                    filter = TableQuery.CombineFilters(filter, TableOperators.And, condition);
+            if (parameter != null) {
+                foreach (var kv in parameter) {
+                    var propertyName = attribute.PropertyName(type, kv.Key);
+                    var condition = TableQuery.GenerateFilterCondition(propertyName, QueryComparisons.Equal, kv.Value);
+                    if (filter == null)
+                        filter = condition;
+                    else
+                        filter = TableQuery.CombineFilters(filter, TableOperators.And, condition);
+                }
             }
 
             var query = new TableQuery<T>();

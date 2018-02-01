@@ -33,9 +33,7 @@ namespace Vabulu.Services {
         }
 
         public async Task<IdentityRole> FindByNameAsync(string normalizedRoleName, CancellationToken cancellationToken) {
-            var entity = await this.tableStore.GetAsync<RoleEntity>(
-                new Args { { nameof(RoleEntity.NormalizedName), normalizedRoleName }
-                });
+            var entity = await this.tableStore.GetAsync(Args<RoleEntity>.Where(x => x.NormalizedName, normalizedRoleName));
             return entity;
         }
 

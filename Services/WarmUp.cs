@@ -50,11 +50,11 @@ namespace Vabulu.Services {
         }
 
         private async Task RemoveOldRoleAssignementAsync() {
-            var roles = await this.tableStore.GetAllAsync<Tables.RoleEntity>(new Args { });
+            var roles = await this.tableStore.GetAllAsync<Tables.RoleEntity>();
             foreach (var r in roles)
                 await this.tableStore.DeleteAsync(r);
 
-            var userroles = await this.tableStore.GetAllAsync<Tables.UserRoleEntity>(new Args { });
+            var userroles = await this.tableStore.GetAllAsync<Tables.UserRoleEntity>();
             foreach (var r in userroles)
                 await this.tableStore.DeleteAsync(r);
         }
