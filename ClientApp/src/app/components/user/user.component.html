@@ -1,0 +1,25 @@
+<view-wrapper [head]="head">
+
+    <div *ngIf="user" class="container">
+        <menu-header>
+            <menu-title>{{ user.userName }}</menu-title>
+        </menu-header>
+        <menu-container *ngIf="roles && user">
+            <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+                <div *ngFor="let role of roles" style="line-height:55px;">
+                    <mat-slide-toggle [(ngModel)]="rolesChecked[role]" [name]="role">{{ 'Role.' + role | translate }}</mat-slide-toggle>
+                </div>
+                <div style="display:flex;flex-direction:row">
+                    <menu-entry (click)="onSubmit(f)" color="{{f.dirty ? '#5926b0' : 'rgba(0,0,0,0.54)' }}" style="flex-grow:1">
+                        {{'Save' | translate}}
+                        <mat-icon>save</mat-icon>
+                    </menu-entry>
+                    <menu-entry (click)="delete()" color="rgba(255, 0, 0, 0.74)">
+                        {{'Delete' | translate}}
+                        <mat-icon>delete_forever</mat-icon>
+                    </menu-entry>
+                </div>
+            </form>
+        </menu-container>
+    </div>
+</view-wrapper>

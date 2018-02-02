@@ -41,6 +41,9 @@ import { FormsModule } from '@angular/forms';
 import { PropertyComponent } from './components/property/property.component';
 import { PropertyListComponent } from './components/property/property-list.component';
 
+import { UserComponent } from './components/user/user.component';
+import { UserListComponent } from './components/user/user-list.component';
+
 import { AdminPropertyComponent } from './components/admin-property/admin-property.component';
 import { AdminPropertyListComponent } from './components/admin-property/admin-property-list.component';
 import { KeyboardService } from './services/keyboard';
@@ -68,6 +71,8 @@ import { Autosize } from '../../node_modules/angular2-autosize/src/autosize.dire
         FieldComponent,
         FlatFieldComponent,
         LoginComponent,
+        UserComponent,
+        UserListComponent,
         PropertyComponent,
         PropertyListComponent,
         AdminPropertyComponent,

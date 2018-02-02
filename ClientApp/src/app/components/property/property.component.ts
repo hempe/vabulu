@@ -45,10 +45,6 @@ export interface CalendarEventData {
     styleUrls: ['./property.component.css']
 })
 export class PropertyComponent implements OnInit {
-    @ViewChild('f') public form: NgForm;
-
-    public uploadUrl: string = '/api/property/id_here/images/upload';
-
     public head: MenuEntry = {
         icon: 'arrow_back',
         name: 'Properties',
