@@ -1,1 +1,35 @@
-{}
+{
+    "Filter": "Suche",
+    "userName": "Benutzer",
+    "Home": "Home",
+    "Admin": "Admin",
+    "Properties": "Liegenschaften",
+    "Users": "Benutzer",
+    "Role": {
+        "user": "Kann Liegenschaften einsehen",
+        "edit": "Kann Liegenschaften verwalten",
+        "admin": "Administrator, kann alles plus Benutzer verwalten"
+    },
+    "Save": "Speichern",
+    "Delete": "Löschen",
+    "Confirm": {
+        "DeleteUser": "Benutzer definitiv löschen?",
+        "DeleteProperty": "Liegenschaft devinitiv löschen?"
+    },
+    "Yes": "Ja",
+    "No": "Nein",
+    "AddNewProperty": "Neue Liegenschaft hinzufügen",
+    "name": "Name",
+    "Today": "Heute",
+    "calendarEvent": "Kalendereintrag",
+    "title": "Titel",
+    "start": "Von ...",
+    "end": "Bis ...",
+    "comment": "Kommentar",
+    "settings": "Einstellungen",
+    "description": "Beschreibung",
+    "MatFile": {
+        "DragFilesHereOrBrowse":
+            "Ziehen Sie Dateien hierher oder durchsuchen Sie Ihren PC"
+    }
+}
