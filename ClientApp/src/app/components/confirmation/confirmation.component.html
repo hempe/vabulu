@@ -1,0 +1,5 @@
+<div style="text-align: center;padding:24px;">
+    <h1 mat-dialog-title>{{ data.messageKey | translate }}</h1>
+    <button mat-raised-button [mat-dialog-close]="true" tabindex="1">{{'Yes' | translate}}</button>
+    <button mat-raised-button color="warn" [mat-dialog-close]="false" tabindex="2">{{'No' | translate}}</button>
+</div>

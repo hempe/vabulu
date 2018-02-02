@@ -13,6 +13,10 @@
             </menu-container>
         </menu-left>
         <menu-right>
+            <menu-header>
+                <menu-title>{{ getMonth() }} {{ getYear() }}</menu-title>
+            </menu-header>
+
             <menu-container>
                 <mat-card-content class="flex-container">
                     <button mat-icon-button mwlCalendarPreviousView view="month" [(viewDate)]="viewDate">

@@ -51,6 +51,11 @@ export class ViewWrapperComponent implements OnInit {
                             name: 'Properties',
                             icon: 'store_mall_directory',
                             action: () => this.router.navigate(['property'])
+                        },
+                        {
+                            name: 'Users',
+                            icon: 'people',
+                            action: () => this.router.navigate(['user'])
                         }
                     ]
                 }

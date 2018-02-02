@@ -34,6 +34,7 @@ import {
     GALLERY_CONF
 } from 'ngx-image-gallery';
 import { isFunction } from 'util';
+import { Confirmation } from '../confirmation/confirmation.component';
 
 export interface CalendarEventData {
     comment: string;
@@ -62,7 +63,8 @@ export class UserComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private http: Http,
-        private config: ConfigurationService
+        private config: ConfigurationService,
+        private confirmation: Confirmation
     ) {}
 
     ngOnInit(): void {
@@ -95,8 +97,16 @@ export class UserComponent implements OnInit {
     }
 
     private delete() {
-        this.http.delete(`/api/admin/user/${this.user.id}`).subscribe(x => {
-            this.router.navigate(['../'], { relativeTo: this.route });
+        this.confirmation.confirm('Confirm.DeleteUser').subscribe(x => {
+            if (x) {
+                this.http
+                    .delete(`/api/admin/user/${this.user.id}`)
+                    .subscribe(x => {
+                        this.router.navigate(['../'], {
+                            relativeTo: this.route
+                        });
+                    });
+            }
         });
     }
 

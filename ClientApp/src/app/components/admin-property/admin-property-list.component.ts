@@ -21,6 +21,7 @@ import { Http } from '@angular/http';
 import { KeyboardService } from '../../services/keyboard';
 import { MatPaginator } from '@angular/material';
 import { MenuEntry } from '../view-wrapper/view-wrapper.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'admin-property-list',
@@ -44,7 +45,8 @@ export class AdminPropertyListComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private router: Router,
         private config: ConfigurationService,
-        private http: Http
+        private http: Http,
+        private translate: TranslateService
     ) {
         this.head = {
             icon: 'arrow_back',
@@ -65,7 +67,12 @@ export class AdminPropertyListComponent implements OnInit, OnDestroy {
             .get(this.url)
             .map(x => x.json())
             .subscribe(x => {
-                this._data = x;
+                this._data = [
+                    {
+                        id: guid(),
+                        name: this.translate.instant('AddNewProperty') + ' ...'
+                    }
+                ].concat(x);
                 this.data.emit(this._data);
             });
         return this.data.asObservable();

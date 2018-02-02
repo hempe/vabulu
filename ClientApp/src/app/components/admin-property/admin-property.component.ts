@@ -39,6 +39,7 @@ import {
     GALLERY_IMAGE,
     GALLERY_CONF
 } from 'ngx-image-gallery';
+import { Confirmation } from '../confirmation/confirmation.component';
 
 export interface CalendarEventData {
     comment: string;
@@ -133,7 +134,8 @@ export class AdminPropertyComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private http: Http,
-        private config: ConfigurationService
+        private config: ConfigurationService,
+        private confirmation: Confirmation
     ) {
         this.colors = Object.keys(Colors).map(x => {
             return {
@@ -251,7 +253,7 @@ export class AdminPropertyComponent implements OnInit {
         try {
             this.http
                 .delete(
-                    `/api/admin/property/id_here/images/${last(
+                    `/api/admin/property/${this.propertyId}/images/${last(
                         img.url.split('/')
                     )}`
                 )
@@ -260,11 +262,25 @@ export class AdminPropertyComponent implements OnInit {
         try {
             this.http
                 .delete(
-                    `/api/admin/property/id_here/images/${last(
+                    `/api/admin/property/${this.propertyId}/images/${last(
                         img.thumbnailUrl.split('/')
                     )}`
                 )
                 .subscribe(x => this.reloadFiles());
         } catch (err) {}
+    }
+
+    private delete() {
+        this.confirmation.confirm('Confirm.DeleteProperty').subscribe(x => {
+            if (x) {
+                this.http
+                    .delete(`/api/admin/property/${this.propertyId}`)
+                    .subscribe(x => {
+                        this.router.navigate(['../'], {
+                            relativeTo: this.route
+                        });
+                    });
+            }
+        });
     }
 }

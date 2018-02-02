@@ -63,10 +63,15 @@ import { WarnMissingTranslationHandler } from './services/warn-missing-translati
 import { httpFactory } from './services/http-interceptor';
 import { PdfRenderService } from './services/pdf-render';
 import { Autosize } from '../../node_modules/angular2-autosize/src/autosize.directive';
+import {
+    ConfirmationDialog,
+    Confirmation
+} from './components/confirmation/confirmation.component';
 
 @NgModule({
     declarations: [
         AppComponent,
+        ConfirmationDialog,
         ViewWrapperComponent,
         FieldComponent,
         FlatFieldComponent,
@@ -91,7 +96,7 @@ import { Autosize } from '../../node_modules/angular2-autosize/src/autosize.dire
         MatFileComponent,
         Autosize
     ],
-    entryComponents: [MatFileComponent],
+    entryComponents: [ConfirmationDialog, MatFileComponent],
     imports: [
         BrowserModule,
         HttpModule,
@@ -139,6 +144,7 @@ import { Autosize } from '../../node_modules/angular2-autosize/src/autosize.dire
         ResizeService,
         KeyboardService,
         ApiService,
+        Confirmation,
         {
             provide: Http,
             useFactory: httpFactory,
