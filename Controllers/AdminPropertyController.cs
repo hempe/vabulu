@@ -61,6 +61,16 @@ namespace Vabulu.Controllers {
         [HttpDelete("{propertyId}")]
         [ProducesResponseType(200)]
         public async Task<IActionResult> Delete([FromRoute] string propertyId) {
+            var images = await this.imageService.GetImagesAsync(propertyId);
+            foreach (var img in images) {
+                try {
+                    await this.imageService.DeleteImageAsync(propertyId, img.Url);
+                } catch { }
+                try {
+                    await this.imageService.DeleteImageAsync(propertyId, img.ThumbnailUrl);
+                } catch { }
+            }
+
             await this.TableStore.DeleteAsync(new Tables.Property { Id = propertyId });
             return this.Ok();
         }

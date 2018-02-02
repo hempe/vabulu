@@ -103,3 +103,8 @@ input:focus,
 textarea {
     outline: none !important;
 }
+
+/* Gallary overrides */
+ngx-image-gallery {
+    z-index: 0 !important;
+}
