@@ -55,9 +55,35 @@
             "Wenn Sie nicht versuchen, sich zu registrieren, ignorieren Sie einfach diese E-Mail, andernfalls klicken Sie bitte unten auf den Link, um Ihre E-Mail zu bestätigen:",
         "Link": "E-Mail bestätigen"
     },
+    "RegistrationTemplate": {
+        "Title": "Neue Registrierung",
+        "Hello": "Hallo, ",
+        "MessageBold": "Es gab eine neue Registrierung mit der E-Mail:",
+        "Message":
+            "Damit der Benutzer Liegenschaften einsehen kann, müssen Ihm die entsprechenden Rechte gegeben werden.",
+        "Link": "Benutzer einsehen"
+    },
+    "PleaseLogoutAndComeBackOnceYourUserWasApproved":
+        "Danke für die Registrierung. Sie erhalten Zugriff, sobald Ihr Account bestätigt wurde.",
     "WelcomeMessage": "Willkommen bei Vabulu",
     "email": "E-Mail",
     "password": "Passwort",
-    "Forgot": "Vergessen",
-    "color": "Farbe"
+    "Forgot": "Passwort vergessen",
+    "color": "Farbe",
+    "Errors": {
+        "PasswordRequiresNonAlphanumeric":
+            "Passwörter müssen mindestens ein nicht alphanumerisches Zeichen enthalten.",
+        "PasswordRequiresDigit":
+            "Passwörter müssen mindestens eine Ziffer haben ('0' - '9').",
+        "DuplicateEmail": "E-Mail ist bereits vergeben",
+        "InvalidLoginAttempt": "Ungültiges Login",
+        "PasswordTooShort": "Passwort zu kurz.",
+        "PasswordRequiresLower":
+            "Passwörter müssen mindestens einen Kleinbuchstaben enthalten ('a' - 'z').",
+        "PasswordRequiresUpper":
+            "Passwörter müssen mindestens einen Großbuchstaben haben ('A' - 'Z').",
+        "PasswordRequiresUniqueChars":
+            "Passwörter müssen mindestens 2 verschiedene Zeichen enthalten.",
+        "Required": "Erforderlich"
+    }
 }

@@ -40,6 +40,10 @@ export class ConfigurationService {
     }
 
     public loggedIn: boolean;
+    public get hasRoles(): boolean {
+        return this.roles && this.roles.length > 0;
+    }
+
     public username: string;
     public roles: string[];
 }

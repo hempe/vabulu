@@ -54,9 +54,35 @@
             "If you didn't make this request, you can ignore this e-mail otherwise follow the link below to confirm your e-mail address:",
         "Link": "Confirm e-mail address"
     },
+    "RegistrationTemplate": {
+        "Title": "New registration",
+        "Hello": "Hello, ",
+        "MessageBold": "There was a new registration with the e-mail:",
+        "Message":
+            "For the user to see any properties, the correct rights have to be assigned to the user.",
+        "Link": "View user"
+    },
+    "PleaseLogoutAndComeBackOnceYourUserWasApproved":
+        "Thanks for registering. You will have access to Vabulu once your account was approved.",
     "WelcomeMessage": "Welcome to Vabulu",
     "email": "E-mail",
     "password": "Password",
-    "Forgot": "Forgot",
-    "color": "Color"
+    "Forgot": "Password forgot",
+    "color": "Color",
+    "Errors": {
+        "PasswordRequiresNonAlphanumeric":
+            "Passwords must have at least one non alphanumeric character.",
+        "PasswordRequiresDigit":
+            "Passwords must have at least one digit ('0'-'9').",
+        "DuplicateEmail": "Email is already taken",
+        "InvalidLoginAttempt": "Invalid login",
+        "PasswordTooShort": "Password too short",
+        "PasswordRequiresLower":
+            "Passwords must have at least one lowercase ('a'-'z').",
+        "PasswordRequiresUpper":
+            "Passwords must have at least one uppercase ('A'-'Z').",
+        "PasswordRequiresUniqueChars":
+            "Passwords must use at least 2 different characters.",
+        "Required": "Required"
+    }
 }

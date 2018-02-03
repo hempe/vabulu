@@ -14,6 +14,8 @@ namespace Vabulu.Tables {
         [SecretValue]
         public string PasswordHash { get; set; }
         public bool EmailConfirmed { get; set; }
+        public string Language { get; set; }
+
         public UserEntity() { }
 
         public static implicit operator UserEntity(User user) => user == null ? null : new UserEntity {
@@ -23,7 +25,8 @@ namespace Vabulu.Tables {
             Email = user.Email,
             EmailConfirmed = user.EmailConfirmed,
             NormalizedEmail = user.NormalizedEmail,
-            PasswordHash = user.PasswordHash
+            PasswordHash = user.PasswordHash,
+            Language = user.Language
         };
     }
 }

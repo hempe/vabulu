@@ -110,12 +110,13 @@
         </div> 
         <div class="background">
             <div class="container">
-                <div class="title">{{ 'RegisterTemplate.Hello' | translate }} {{ name }}</div>
-                <div class="bold">{{ 'RegisterTemplate.MessageBold' | translate }}</div>
-                <div class="message">{{ 'RegisterTemplate.Message' | translate }}</div>
+                <div class="title">{{ 'RegistrationTemplate.Hello' | translate }}</div>
+                <div class="bold">{{ 'RegistrationTemplate.MessageBold' | translate }}</div>
+                <div class="bold">{{ email }}</div>
+                <div class="message">{{ 'RegistrationTemplate.Message' | translate }}</div>
                 <br/>
                 <div class="link">
-                    <a class="a" href="{{callbackUrl}}">{{ 'RegisterTemplate.Link' | translate }}</a>
+                    <a class="a" href="{{callbackUrl}}">{{ 'RegistrationTemplate.Link' | translate }}</a>
                 </div>
             </div>
         </div>

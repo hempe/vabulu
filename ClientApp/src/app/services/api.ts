@@ -34,7 +34,8 @@ export class ApiService {
         this.http
             .post('/.auth/register', {
                 email: email,
-                password: password
+                password: password,
+                language: this.configuration.language
             })
             .subscribe(x => this.init());
     }
@@ -108,6 +109,13 @@ export class ApiService {
                         this.configuration.loggedIn = x.loggedIn;
                         this.configuration.username = x.userName;
                         this.configuration.roles = x.roles;
+
+                        if (
+                            this.configuration.loggedIn &&
+                            !this.configuration.hasRoles
+                        ) {
+                            this.logoutAfterTimeout();
+                        }
                         resolve(true);
                     },
                     err => {
@@ -115,5 +123,13 @@ export class ApiService {
                     }
                 );
         });
+    }
+
+    public logoutAfterTimeout() {
+        console.info('User will be logged out after 30s.');
+        setTimeout(() => {
+            console.info('Logout user.');
+            this.signOut();
+        }, 30 * 1000);
     }
 }

@@ -15,7 +15,7 @@
     height: 42px;
 }
 .company:hover {
-    color: #6abd20;
+    color: #8427c5;
 }
 
 .avatar {
@@ -34,4 +34,44 @@
     .user-name {
         display: none;
     }
+}
+
+/** User with no roles **/
+
+.wrapper {
+    height: calc(100vh - 64px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.element-container {
+    min-height: 90%;
+    min-width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    padding: 0;
+}
+
+.element {
+    padding: 0px;
+    width: 100%;
+    text-align: center;
+}
+
+.company-wrapper {
+    background: url(/assets/img/backgrounds/header.png) no-repeat 50% fixed;
+    background-size: cover;
+    transition: color 3000ms;
+}
+.company-message {
+    padding: 0.4em;
+    font-size: 3em;
+    color: white;
+    line-height: 3em;
+}
+.welcome-message {
+    color: white;
 }

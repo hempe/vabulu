@@ -1,6 +1,5 @@
 <div *ngIf="uploader">
-    <input class="hidden" #fileInput type="file" ng2FileSelect [uploader]="uploader" accept="image/gif,image/png,impage/jpeg,impage/jpg"
-    />
+    <input class="hidden" #fileInput type="file" ng2FileSelect [uploader]="uploader" accept="image/*" />
     <div class="drop-zone-wrapper" [ngClass]="{ 'full-screen': uploader?.queue?.length == 0 }">
         <div ng2FileDrop [ngClass]="{'file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="uploader" class="drop-zone"
             (click)="fileInput.click()">

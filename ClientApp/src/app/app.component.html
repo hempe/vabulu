@@ -13,8 +13,27 @@
 
 </mat-toolbar>
 
-<div *ngIf="configuraton.loggedIn && !loading">
+<div *ngIf="configuraton.loggedIn && configuration.hasRoles && !loading">
   <router-outlet></router-outlet>
+</div>
+<div *ngIf="configuraton.loggedIn && !configuration.hasRoles && !loading">
+  <div class="wrapper">
+    <div class="element-container">
+      <mat-card class="element">
+        <div class="company-wrapper">
+          <span class="company-message company">{{ 'WelcomeMessage' | translate }}</span>
+          <div class="welcome-message-wrapper">
+            <p class="welcome-message">{{ 'PleaseLogoutAndComeBackOnceYourUserWasApproved' | translate }}</p>
+          </div>
+          <div style="width:100%;height:250px;padding-bottom:0px;">
+            <button mat-raised-button (click)="signOut()">
+              <mat-icon>exit_to_app</mat-icon> Logout
+            </button>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
 </div>
 <div *ngIf="!configuraton.loggedIn && !loading">
   <login></login>

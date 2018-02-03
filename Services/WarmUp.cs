@@ -43,10 +43,6 @@ namespace Vabulu.Services {
                     continue;
                 await this.userManager.AddToRoleAsync(user, "admin");
             }
-
-            var x = await this.userManager.FindByNameAsync("hempe@live.com");
-            await this.userManager.AddToRoleAsync(x, "user");
-
         }
 
         private async Task RemoveOldRoleAssignementAsync() {

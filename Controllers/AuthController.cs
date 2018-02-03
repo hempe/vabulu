@@ -42,11 +42,12 @@ namespace Vabulu.Controllers {
                 return this.BadRequest(new { Password = new [] { "Required" } });
             }
 
-            var user = new User() { Email = model.Email, UserName = model.Email };
+            var user = new User() { Email = model.Email, UserName = model.Email, Language = model.Language };
             var created = await this.UserManager.CreateAsync(user, model.Password);
             if (created.Succeeded) {
                 await this.signInManager.SignInAsync(user, isPersistent : false);
-                await this.RequestEmailConfirmationAsync(mailService, translationService, user, model.Language);
+                await this.RequestEmailConfirmationAsync(mailService, translationService, user);
+                await this.NotifyAdminsOfRegistration(mailService, translationService, user);
                 return this.Ok();
             }
 
@@ -191,7 +192,7 @@ namespace Vabulu.Controllers {
             }
 
             if (!await UserManager.IsEmailConfirmedAsync(user)) {
-                await this.RequestEmailConfirmationAsync(mailService, translationService, user, string.Empty);
+                await this.RequestEmailConfirmationAsync(mailService, translationService, user);
                 return this.Ok();
             }
 
@@ -232,7 +233,7 @@ namespace Vabulu.Controllers {
             });
         }
 
-        private async Task RequestEmailConfirmationAsync(MailService mailService, TranslationService translationService, Models.User user, string language) {
+        private async Task RequestEmailConfirmationAsync(MailService mailService, TranslationService translationService, Models.User user) {
             try {
                 string code = await UserManager.GenerateEmailConfirmationTokenAsync(user);
                 var callbackUrl = this.Request.GetDisplayUrl().ResetToRoot().AppendPathSegments(".auth", "confirm").SetQueryParams(new {
@@ -242,14 +243,34 @@ namespace Vabulu.Controllers {
 
                 await mailService.SendEmailAsync(
                     user.Email,
-                    await translationService.TranslateAsync(language, "RegisterTemplate.Title"),
+                    await translationService.TranslateAsync(user.Language, "RegisterTemplate.Title"),
                     "Templates/Register.html.template",
                     new {
                         Name = $"{user.UserName}",
                             CallbackUrl = callbackUrl,
                             Url = this.Request.GetDisplayUrl().ResetToRoot()
-                    }, language);
+                    }, user.Language);
+
             } catch { }
+        }
+
+        private async Task NotifyAdminsOfRegistration(MailService mailService, TranslationService translationService, Models.User user) {
+            var callbackUrl = this.Request.GetDisplayUrl().ResetToRoot().AppendPathSegments("user", user.Id);
+            var url = this.Request.GetDisplayUrl().ResetToRoot();
+            var userroles = await this.TableStore.GetAllAsync(Args<Tables.UserRoleEntity>.Where(x => x.RoleName, "admin"));
+            foreach (var ur in userroles) {
+                var admin = await this.UserManager.FindByIdAsync(ur.UserId);
+                await mailService.SendEmailAsync(
+                    user.Email,
+                    await translationService.TranslateAsync(admin.Language, "RegistrationTemplate.Title"),
+                    "Templates/Registration.html.template",
+                    new {
+                        Name = $"{user.UserName}",
+                            CallbackUrl = callbackUrl,
+                            Email = user.Email,
+                            Url = url
+                    }, admin.Language);
+            }
         }
 
         private IActionResult RedirectToLocal(string returnUrl) {

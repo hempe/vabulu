@@ -7,6 +7,7 @@ using Vabulu.Tables;
 
 namespace Vabulu.Models {
     public class User : IdentityUser {
+        public string Language { get; set; }
 
         public static implicit operator User(UserEntity user) => user == null ? null : new User {
             UserName = user.UserName,
@@ -16,6 +17,7 @@ namespace Vabulu.Models {
             EmailConfirmed = user.EmailConfirmed,
             NormalizedEmail = user.NormalizedEmail,
             PasswordHash = user.PasswordHash,
+            Language = user.Language
         };
     }
 }
