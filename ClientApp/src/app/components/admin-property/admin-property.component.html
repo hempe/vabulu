@@ -52,7 +52,7 @@
                     <div *ngIf="event">
 
                         <field icon="color_lens" [(ngModel)]="event.color" name="color" type="select" flex=3 [options]="colors" [color]="event.color && event.color.primary ? event.color.primary : 'inherit'"></field>
-                        <field [(ngModel)]="event.title" name="title" type="text" flex=3 color="red"></field>
+                        <field [(ngModel)]="event.title" name="title" type="text" flex=3></field>
                         <field [(ngModel)]="event.start" name="start" type="date" flex=3></field>
                         <field [(ngModel)]="event.end" name="end" type="date" flex=3></field>
                         <field [(ngModel)]="event.meta.comment" name="comment" type="textarea" flex=3></field>
@@ -92,8 +92,9 @@
         <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
     </div>
     <div *ngIf="day.events.length > 0">
-        <div (click)="handleEvent(event, $event)" class="cal-cell-title" *ngFor="let event of day.events" [style.backgroundColor]="event.color.primary"
-            [ngClass]="event?.cssClass" mwlDraggable [dropData]="{event: event}" [dragAxis]="{x: event.draggable, y: event.draggable}">
+        <div (click)="handleEvent(event, $event)" class="cal-cell-title" *ngFor="let event of day.events; let i = index" [style.backgroundColor]="event.color.primary"
+            [ngClass]="event?.cssClass" mwlDraggable (dragStart)="day['dragging_'+i] = true" (dragEnd)="day['dragging_'+i] = false"
+            [dropData]="{event: event}" [dragAxis]="{x: event.draggable, y: event.draggable}" [ngStyle]="{'position':day['dragging_'+i] ? 'absolute' : 'static'}">
             {{ event.title }}
         </div>
     </div>

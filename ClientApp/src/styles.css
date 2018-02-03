@@ -108,3 +108,9 @@ textarea {
 ngx-image-gallery {
     z-index: 0 !important;
 }
+
+/** Calendar **/
+.cal-days .cal-cell-row :nth-child(6n),
+.cal-days .cal-cell-row :nth-child(7n) {
+    background: #fafafa;
+}
