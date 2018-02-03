@@ -40,6 +40,7 @@ import {
     GALLERY_CONF
 } from 'ngx-image-gallery';
 import { Confirmation } from '../confirmation/confirmation.component';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface CalendarEventData {
     comment: string;
@@ -83,7 +84,7 @@ export class AdminPropertyComponent implements OnInit {
         this.resetForm(this.form);
     }
 
-    public colors: { name: string; value: EventColor }[];
+    public colors: { name: string; value: EventColor; color: string }[];
 
     events: CalendarEvent<CalendarEventData>[] = [];
 
@@ -135,15 +136,17 @@ export class AdminPropertyComponent implements OnInit {
         private router: Router,
         private http: Http,
         private config: ConfigurationService,
-        private confirmation: Confirmation
+        private confirmation: Confirmation,
+        private translate: TranslateService
     ) {
         this.colors = Object.keys(Colors).map(x => {
             return {
-                name: x,
+                name: this.translate.instant('Colors.' + x),
                 value: <EventColor>{
                     secondary: Colors[x],
                     primary: Colors[x]
-                }
+                },
+                color: Colors[x]
             };
         });
 

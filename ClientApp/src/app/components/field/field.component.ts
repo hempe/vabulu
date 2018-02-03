@@ -155,6 +155,7 @@ export class FieldComponent implements ControlValueAccessor, OnInit {
     @Input() public name: string;
     @Input() public type: string;
     @Input() public options: { name: string; value: string }[];
+    @Input() public color: string = 'inherit';
 
     public matcher: CustomErrorStateMatcher = new CustomErrorStateMatcher();
 

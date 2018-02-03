@@ -50,8 +50,9 @@
             <menu-container style="position:relative;">
                 <form #eventForm="ngForm" (ngSubmit)="onSubmit(eventForm)" novalidate>
                     <div *ngIf="event">
-                        <field [(ngModel)]="event.color" name="color" type="select" flex=3 [options]="colors"></field>
-                        <field [(ngModel)]="event.title" name="title" type="text" flex=3></field>
+
+                        <field icon="color_lens" [(ngModel)]="event.color" name="color" type="select" flex=3 [options]="colors" [color]="event.color && event.color.primary ? event.color.primary : 'inherit'"></field>
+                        <field [(ngModel)]="event.title" name="title" type="text" flex=3 color="red"></field>
                         <field [(ngModel)]="event.start" name="start" type="date" flex=3></field>
                         <field [(ngModel)]="event.end" name="end" type="date" flex=3></field>
                         <field [(ngModel)]="event.meta.comment" name="comment" type="textarea" flex=3></field>

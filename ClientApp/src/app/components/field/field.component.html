@@ -1,27 +1,27 @@
 <div [ngSwitch]="type">
     <div *ngSwitchCase="'email'">
-        <mat-icon *ngIf="icon">{{icon}}</mat-icon>
-        <mat-form-field [ngClass]="{'without-icon':!icon,'with-icon':icon}">
+        <mat-icon *ngIf="icon" [ngStyle]="{ 'color':color }">{{icon}}</mat-icon>
+        <mat-form-field [ngClass]="{'without-icon':!icon,'with-icon':icon}" [ngStyle]="{ 'color':color }">
             <input matInput type="{{type}}" placeholder="{{ name | translate }}" name="{{name}}" [(ngModel)]="value" (blur)="onBlur()"
                 (focus)="onFocus()" email [errorStateMatcher]="matcher">
             <mat-error error [name]="name"></mat-error>
         </mat-form-field>
     </div>
     <div *ngSwitchCase="'textarea'">
-        <mat-icon *ngIf="icon">{{icon}}</mat-icon>
-        <mat-form-field [ngClass]="{'without-icon':!icon,'with-icon':icon}">
+        <mat-icon *ngIf="icon" [ngStyle]="{ 'color':color }">{{icon}}</mat-icon>
+        <mat-form-field [ngClass]="{'without-icon':!icon,'with-icon':icon}" [ngStyle]="{ 'color':color }">
             <textarea matInput type="{{type}}" rows="10" placeholder="{{ name | translate }}" name="{{name}}" [(ngModel)]="value" (blur)="onBlur()"
                 (focus)="onFocus()" [errorStateMatcher]="matcher"></textarea>
             <mat-error error [name]="name"></mat-error>
         </mat-form-field>
     </div>
     <div *ngSwitchCase="'select'">
-        <mat-icon *ngIf="icon">{{icon}}</mat-icon>
+        <mat-icon *ngIf="icon" [ngStyle]="{ 'color':color }">{{icon}}</mat-icon>
         <mat-form-field [ngClass]="{'without-icon':!icon,'with-icon':icon}">
             <mat-select placeholder="{{ name | translate }}" name="{{name}}" [(ngModel)]="value" (blur)="onBlur()" (focus)="onFocus()"
                 [errorStateMatcher]="matcher">
                 <mat-option></mat-option>
-                <mat-option *ngFor="let option of options" [value]="option.value">
+                <mat-option *ngFor="let option of options" [value]="option.value" [ngStyle]="{'color':option.color ? option.color : 'rgba(0,0,0,0.54)'}">
                     {{ option.name }}
                 </mat-option>
             </mat-select>
@@ -30,8 +30,8 @@
     </div>
 
     <div *ngSwitchCase="'date'">
-        <mat-icon *ngIf="icon">{{icon}}</mat-icon>
-        <mat-form-field [ngClass]="{'without-icon':!icon,'with-icon':icon}">
+        <mat-icon *ngIf="icon" [ngStyle]="{ 'color':color }">{{icon}}</mat-icon>
+        <mat-form-field [ngClass]="{'without-icon':!icon,'with-icon':icon}" [ngStyle]="{ 'color':color }">
             <input matInput [matDatepicker]="picker" placeholder="{{ name | translate }}" name="{{name}}" [(ngModel)]="value" (blur)="onBlur()"
                 (focus)="onFocus()" [errorStateMatcher]="matcher" [min]="min" [max]="max">
             <mat-error error [name]="name"></mat-error>
@@ -41,8 +41,8 @@
     </div>
 
     <div *ngSwitchCase="isInputType(type)">
-        <mat-icon *ngIf="icon">{{icon}}</mat-icon>
-        <mat-form-field [ngClass]="{'without-icon':!icon,'with-icon':icon}">
+        <mat-icon *ngIf="icon" [ngStyle]="{ 'color':color }">{{icon}}</mat-icon>
+        <mat-form-field [ngClass]="{'without-icon':!icon,'with-icon':icon}" [ngStyle]="{ 'color':color }">
             <input matInput type="{{type}}" placeholder="{{ name | translate }}" name="{{name}}" [(ngModel)]="value" (blur)="onBlur()"
                 (focus)="onFocus()" [errorStateMatcher]="matcher" [min]="min" [max]="max">
             <mat-error error [name]="name"></mat-error>
@@ -50,8 +50,8 @@
     </div>
 
     <div *ngSwitchCase="'readonly'">
-        <mat-icon *ngIf="icon">{{icon}}</mat-icon>
-        <mat-form-field [ngClass]="{'without-icon':!icon,'with-icon':icon}">
+        <mat-icon *ngIf="icon" [ngStyle]="{ 'color':color }">{{icon}}</mat-icon>
+        <mat-form-field [ngClass]="{'without-icon':!icon,'with-icon':icon}" [ngStyle]="{ 'color':color }">
             <input matInput type="text" readonly placeholder="{{ name | translate }}" name="{{name}}" [(ngModel)]="value" (blur)="onBlur()"
                 (focus)="onFocus()" [errorStateMatcher]="matcher" [min]="min" [max]="max">
             <mat-error error [name]="name"></mat-error>

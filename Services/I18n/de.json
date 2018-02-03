@@ -85,5 +85,26 @@
         "PasswordRequiresUniqueChars":
             "Passwörter müssen mindestens 2 verschiedene Zeichen enthalten.",
         "Required": "Erforderlich"
+    },
+    "Colors": {
+        "Amber": "Bernstein",
+        "Blue": "Blau",
+        "Blue_Grey": "Graublau",
+        "Brown": "Braun",
+        "Cyan": "Cyan",
+        "Deep_Orange": "Dunkelorange",
+        "Deep_Purple": "Dunkellila",
+        "Green": "Grün",
+        "Grey": "Grau",
+        "Indigo": "Blau",
+        "Light_Blue": "Hellblau",
+        "Light_Green": "Hellgrün",
+        "Lime": "Limette",
+        "Orange": "Orange",
+        "Pink": "Pink",
+        "Purple": "Lila",
+        "Red": "Rot",
+        "Teal": "Türkis",
+        "Yellow": "Gelb"
     }
 }
