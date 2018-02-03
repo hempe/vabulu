@@ -38,7 +38,10 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { FlatFieldComponent } from './components/flat-field/flat-field.component';
 import { FormsModule } from '@angular/forms';
 
-import { PropertyComponent } from './components/property/property.component';
+import {
+    PropertyComponent,
+    ImageFullscreenDialog
+} from './components/property/property.component';
 import { PropertyListComponent } from './components/property/property-list.component';
 
 import { UserComponent } from './components/user/user.component';
@@ -67,11 +70,14 @@ import {
     ConfirmationDialog,
     Confirmation
 } from './components/confirmation/confirmation.component';
+import { CalendarDateFormatter } from 'angular-calendar';
+import { CustomDateFormatter } from './services/CustomDateFormatter';
 
 @NgModule({
     declarations: [
         AppComponent,
         ConfirmationDialog,
+        ImageFullscreenDialog,
         ViewWrapperComponent,
         FieldComponent,
         FlatFieldComponent,
@@ -96,7 +102,11 @@ import {
         MatFileComponent,
         Autosize
     ],
-    entryComponents: [ConfirmationDialog, MatFileComponent],
+    entryComponents: [
+        ConfirmationDialog,
+        ImageFullscreenDialog,
+        MatFileComponent
+    ],
     imports: [
         BrowserModule,
         HttpModule,
@@ -156,6 +166,11 @@ import {
                 MatSnackBar,
                 TranslateService
             ]
+        },
+        {
+            provide: CalendarDateFormatter,
+            useClass: CustomDateFormatter,
+            deps: [ConfigurationService]
         },
         { provide: ErrorStateMatcher, useClass: CustomErrorStateMatcher }
     ],

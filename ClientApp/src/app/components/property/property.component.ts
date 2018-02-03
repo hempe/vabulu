@@ -1,5 +1,11 @@
 import { Colors, ConfigurationService } from '../../services/configuration';
-import { Component, HostListener, ViewChild, OnInit } from '@angular/core';
+import {
+    Component,
+    HostListener,
+    ViewChild,
+    OnInit,
+    Inject
+} from '@angular/core';
 import { array, numberWithSeperator, clone, last } from '../../common/helper';
 
 import { Color } from 'ng2-charts';
@@ -34,6 +40,7 @@ import {
     GALLERY_CONF
 } from 'ngx-image-gallery';
 import { isFunction } from 'util';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 
 export interface CalendarEventData {
     comment: string;
@@ -72,7 +79,8 @@ export class PropertyComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private http: Http,
-        private config: ConfigurationService
+        private config: ConfigurationService,
+        private dialog: MatDialog
     ) {}
 
     private fixEvent<T>(event: CalendarEvent<T> | any): CalendarEvent<T> {
@@ -115,6 +123,14 @@ export class PropertyComponent implements OnInit {
             });
     }
 
+    public galleryImageClicked(index: number) {
+        let dialogRef = this.dialog.open(ImageFullscreenDialog, {
+            data: {
+                src: this.images[index].url
+            }
+        });
+    }
+
     ngOnInit(): void {
         this.propertyId = this.route.snapshot.params['propertyId'];
 
@@ -139,4 +155,18 @@ export class PropertyComponent implements OnInit {
     };
 
     images: GALLERY_IMAGE[] = [];
+}
+
+@Component({
+    template: '<img [src]="data.src" style="width:100%;height:100%" />'
+})
+export class ImageFullscreenDialog {
+    constructor(
+        public dialogRef: MatDialogRef<ImageFullscreenDialog>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) {}
+
+    onNoClick(): void {
+        this.dialogRef.close();
+    }
 }

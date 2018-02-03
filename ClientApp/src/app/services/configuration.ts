@@ -31,8 +31,12 @@ export class ConfigurationService {
     constructor(private translateService: TranslateService) {}
 
     public get language(): string {
-        let userLang = navigator.language || (<any>navigator).userLanguage;
-        return userLang.split('-')[0];
+        let userLang =
+            navigator.languages && navigator.languages.length > 0
+                ? navigator.languages[0]
+                : navigator.language || (<any>navigator).userLanguage;
+        var lang = userLang.split('-')[0];
+        return lang;
     }
 
     public loggedIn: boolean;

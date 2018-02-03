@@ -98,7 +98,7 @@ export class ApiService {
 
     public init(): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
-            this.translate.setDefaultLang('en');
+            this.translate.setDefaultLang(this.configuration.language);
             this.http
                 .get('.auth/self')
                 .map(x => x.json())

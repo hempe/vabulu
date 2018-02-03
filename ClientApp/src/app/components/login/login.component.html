@@ -8,18 +8,20 @@
                     <p class="welcome-message">{{ 'WelcomeMessage' | translate }}</p>
                 </div>
 
-                <div style="width:100%;height:220px;padding-bottom:0px;">
+                <div style="width:100%;height:250px;padding-bottom:0px;">
                     <mat-card style="max-width:400px;display:inline-block">
-                        <form *ngIf="login" flexContainer class="flex-container" novalidate #f="ngForm">
-                            <field icon="email" [(ngModel)]="login.email" name="email" type="email" flex=10></field>
-                            <field icon="lock" [(ngModel)]="login.password" name="password" type="password" flex=10></field>
-                            <button mat-raised-button type="button" class="signIn" (click)="signIn()" flex=1>
+                        <form *ngIf="login" novalidate #f="ngForm">
+                            <div flexContainer class="flex-container">
+                                <field icon="email" [(ngModel)]="login.email" name="email" type="email" flex=10></field>
+                                <field icon="lock" [(ngModel)]="login.password" name="password" type="password" flex=10></field>
+                            </div>
+                            <button mat-raised-button type="button" class="signIn" (click)="signIn()">
                                 <img class="logo" src="assets/img/auth/default.svg" /> {{ 'SignIn' | translate }}
                             </button>
-                            <button color="accent" type="button" mat-button class="signIn" (click)="register()" flex=1>
+                            <button color="accent" type="button" mat-button class="signIn" (click)="register()">
                                 {{ 'Register' | translate }}
                             </button>
-                            <button color="accent" type="button" mat-button class="signIn" (click)="forgot(f)" flex=1>
+                            <button color="accent" type="button" mat-button class="signIn" (click)="forgot(f)">
                                 {{ 'Forgot' | translate }}
                             </button>
                         </form>

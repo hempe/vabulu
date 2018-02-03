@@ -59,28 +59,6 @@ export class AppComponent {
         }
     }
 
-    public upload() {
-        this.importFileInput.nativeElement.click();
-    }
-
-    public importFileInputChanged(fileInput: any) {
-        if (fileInput.target.files && fileInput.target.files[0]) {
-            var reader = new FileReader();
-            reader.onload = (e: any) => {
-                this.http
-                    .post(`/api/import`, JSON.parse(e.target.result))
-                    .subscribe(r => {
-                        this.router.navigated = false;
-                        this.router.navigate(['./'], {
-                            relativeTo: this.route
-                        });
-                    });
-                this.importFileInput.nativeElement.value = null;
-            };
-            reader.readAsText(fileInput.target.files[0], 'utf-8');
-        }
-    }
-
     private refreshIFrame() {
         setInterval(() => {
             if (
@@ -104,9 +82,5 @@ export class AppComponent {
 
     public goHome() {
         this.router.navigate(['/']);
-    }
-
-    public gotoProfile() {
-        this.router.navigate(['/profile']);
     }
 }

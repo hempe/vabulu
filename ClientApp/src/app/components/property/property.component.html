@@ -8,7 +8,7 @@
             <menu-container>
                 <textarea autosize [(ngModel)]="property.description" readonly class="description"></textarea>
                 <mat-card-content class="flex-container">
-                    <ngx-image-gallery [images]="images" [conf]="conf"></ngx-image-gallery>
+                    <ngx-image-gallery [images]="images" [conf]="conf" (onImageClicked)="galleryImageClicked($event)"></ngx-image-gallery>
                 </mat-card-content>
             </menu-container>
         </menu-left>

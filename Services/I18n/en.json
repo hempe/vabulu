@@ -1,35 +1,62 @@
 {
-    "Filter": "Suche",
-    "userName": "Benutzer",
+    "Filter": "Filter",
+    "userName": "User",
     "Home": "Home",
     "Admin": "Admin",
-    "Properties": "Liegenschaften",
-    "Users": "Benutzer",
+    "Properties": "Properties",
+    "Users": "Users",
     "Role": {
-        "user": "Kann Liegenschaften einsehen",
-        "edit": "Kann Liegenschaften verwalten",
-        "admin": "Administrator, kann alles plus Benutzer verwalten"
+        "user": "Can view properties",
+        "edit": "Can manage properties",
+        "admin": "Administrator, in addition, can manage users"
     },
-    "Save": "Speichern",
-    "Delete": "Löschen",
+    "Save": "Save",
+    "Delete": "Delete",
     "Confirm": {
-        "DeleteUser": "Benutzer definitiv löschen?",
-        "DeleteProperty": "Liegenschaft devinitiv löschen?"
+        "DeleteUser": "Delete user permanently?",
+        "DeleteProperty": "Delete property permanently?"
     },
-    "Yes": "Ja",
-    "No": "Nein",
-    "AddNewProperty": "Neue Liegenschaft hinzufügen",
+    "Yes": "Yes",
+    "No": "No",
+    "AddNewProperty": "Add new property",
     "name": "Name",
-    "Today": "Heute",
-    "calendarEvent": "Kalendereintrag",
+    "Today": "Today",
+    "calendarEvent": "Calendar event",
     "title": "Titel",
-    "start": "Von ...",
-    "end": "Bis ...",
-    "comment": "Kommentar",
-    "settings": "Einstellungen",
-    "description": "Beschreibung",
+    "start": "Start ...",
+    "end": "End ...",
+    "comment": "Comment",
+    "settings": "Settings",
+    "description": "Description",
     "MatFile": {
-        "DragFilesHereOrBrowse":
-            "Ziehen Sie Dateien hierher oder durchsuchen Sie Ihren PC"
-    }
+        "DragFilesHereOrBrowse": "Drag files here or browse your PC"
+    },
+    "Auth": {
+        "SignInWithGoogle": "Sign in with Google",
+        "SignInWithMicrosoft": "Sign in with Microsoft"
+    },
+    "SignIn": "Sign in",
+    "Register": "Register",
+    "ResetPasswordTemplate": {
+        "Title": "Reset password",
+        "Hello": "Hello, ",
+        "MessageBold": "There was a request to reset your password.",
+        "Message":
+            "If you didn't make this request, you can ignore this e-mail otherwise follow the link below to reset your password:",
+        "Link": "Reset password"
+    },
+    "RegisterEmailSend": "Reset e-mail was sent",
+    "RegisterTemplate": {
+        "Title": "E-mail confirmation",
+        "Hello": "Hello, ",
+        "MessageBold": "There was a registration with this e-mail.",
+        "Message":
+            "If you didn't make this request, you can ignore this e-mail otherwise follow the link below to confirm your e-mail address:",
+        "Link": "Confirm e-mail address"
+    },
+    "WelcomeMessage": "Welcome to Vabulu",
+    "email": "E-mail",
+    "password": "Password",
+    "Forgot": "Forgot",
+    "color": "Color"
 }
