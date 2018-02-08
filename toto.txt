@@ -1,5 +1,1 @@
-- Liste von Usern für papi
-- Benutzer "freischalten" Sehen/Bearbeiten
 - Kontakt formular / Tel+Email und ich möchte XXX buchen
-- Neue Location erfassen
-- Admin view add entry
