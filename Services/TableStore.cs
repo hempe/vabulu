@@ -75,6 +75,7 @@ namespace Vabulu.Services
         static TableStore()
         {
             Tables = new Dictionary<Type, CloudTable>();
+            TableSets = new Dictionary<Type, object>();
             Views = new Dictionary<Type, CloudTable>();
             TableAttributes = new Dictionary<Type, TableAttribute>();
             ViewAttributes = new Dictionary<Type, ViewAttribute>();
