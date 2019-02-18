@@ -1,10 +1,11 @@
 using Microsoft.WindowsAzure.Storage.Table;
 using Vabulu.Attributes;
 
-namespace Vabulu.Tables {
-
+namespace Vabulu.Tables
+{
     [Table("Tokens")]
-    public class Token : UserData {
+    public class Token : UserData
+    {
         public string Name { get; set; }
         public string Value { get; set; }
 

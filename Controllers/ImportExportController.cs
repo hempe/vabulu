@@ -7,21 +7,25 @@ using Vabulu.Models;
 using Vabulu.Services;
 using Vabulu.Services.Export;
 
-namespace Vabulu.Controllers {
-
+namespace Vabulu.Controllers
+{
     [Route("api/export")]
     [Authorize(Roles = "user, edit, admin")]
-    public class ImportController : BaseController {
+    public class ImportController : BaseController
+    {
         public ImportController(UserManager<User> userManager, TableStore tableStore) : base(userManager, tableStore) { }
 
         [HttpGet]
         [Route("")]
         public async Task<IActionResult> Export(
             [FromServices] BaseHandler json, [FromServices] XlsHandler xls, [FromServices] HtmlHandler html, [FromQuery] string format
-        ) {
-            try {
+        )
+        {
+            try
+            {
                 IActionResult file = null;
-                switch (format.ToLower()) {
+                switch (format.ToLower())
+                {
                     case "xlsx":
                     case "xls":
                         file = this.File(await xls.GetExportAsync(this.UserId), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
@@ -34,7 +38,9 @@ namespace Vabulu.Controllers {
                         break;
                 }
                 return file;
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 return this.Ok(e);
             }
         }

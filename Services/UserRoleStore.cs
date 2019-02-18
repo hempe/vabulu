@@ -11,11 +11,12 @@ using Vabulu.Middleware;
 using Vabulu.Models;
 using Vabulu.Tables;
 
-namespace Vabulu.Services {
-
-    internal partial class UserStore : IUserRoleStore<User> {
-
-        public async Task AddToRoleAsync(User user, string normalizedRoleName, CancellationToken cancellationToken) {
+namespace Vabulu.Services
+{
+    internal partial class UserStore : IUserRoleStore<User>
+    {
+        public async Task AddToRoleAsync(User user, string normalizedRoleName, CancellationToken cancellationToken)
+        {
             var roleName = await this.GetRoleNameAsync(normalizedRoleName);
             var result = await this.tableStore.AddOrUpdateAsync(new UserRoleEntity { UserId = user.Id, RoleName = roleName });
             if (result.HttpStatusCode >= 200 && result.HttpStatusCode < 300)
@@ -23,7 +24,8 @@ namespace Vabulu.Services {
             throw new Exception("Update failed");
         }
 
-        public async Task<IList<string>> GetRolesAsync(User user, CancellationToken cancellationToken) {
+        public async Task<IList<string>> GetRolesAsync(User user, CancellationToken cancellationToken)
+        {
             var entities = await this.tableStore.GetAllAsync(Args<UserRoleEntity>.Where(x => x.UserId, user.Id));
             if (entities == null)
                 return null;
@@ -31,26 +33,30 @@ namespace Vabulu.Services {
             return entities.Select(x => x.RoleName).ToList();
         }
 
-        public async Task<IList<User>> GetUsersInRoleAsync(string normalizedRoleName, CancellationToken cancellationToken) {
+        public async Task<IList<User>> GetUsersInRoleAsync(string normalizedRoleName, CancellationToken cancellationToken)
+        {
             var roleName = await this.GetRoleNameAsync(normalizedRoleName);
             var entities = await this.tableStore.GetAllAsync(Args<UserRoleEntity>.Where(x => x.RoleName, roleName));
             if (entities == null)
                 return null;
             var users = new List<User>();
-            foreach (var entity in entities) {
+            foreach (var entity in entities)
+            {
                 users.Add(await this.FindByIdAsync(entity.UserId, cancellationToken));
             }
 
             return users;
         }
 
-        public async Task<bool> IsInRoleAsync(User user, string normalizedRoleName, CancellationToken cancellationToken) {
+        public async Task<bool> IsInRoleAsync(User user, string normalizedRoleName, CancellationToken cancellationToken)
+        {
             var roleName = await this.GetRoleNameAsync(normalizedRoleName);
             var entity = await this.tableStore.GetAsync(new UserRoleEntity { UserId = user.Id, RoleName = roleName });
             return entity != null;
         }
 
-        public async Task RemoveFromRoleAsync(User user, string normalizedRoleName, CancellationToken cancellationToken) {
+        public async Task RemoveFromRoleAsync(User user, string normalizedRoleName, CancellationToken cancellationToken)
+        {
             var roleName = await this.GetRoleNameAsync(normalizedRoleName);
             var result = await this.tableStore.DeleteAsync(new UserRoleEntity { UserId = user.Id, RoleName = roleName });
             if (result.HttpStatusCode >= 200 && result.HttpStatusCode < 300)
@@ -58,7 +64,8 @@ namespace Vabulu.Services {
             throw new Exception("Update failed");
         }
 
-        private async Task<string> GetRoleNameAsync(string normalizedRoleName) {
+        private async Task<string> GetRoleNameAsync(string normalizedRoleName)
+        {
             var entity = await this.tableStore.GetAsync(Args<RoleEntity>.Where(x => x.NormalizedName, normalizedRoleName));
             return entity?.Name ?? normalizedRoleName;
         }

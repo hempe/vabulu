@@ -9,22 +9,26 @@ using Scriban.Parsing;
 using Scriban.Runtime;
 using Scriban.Syntax;
 
-namespace Vabulu.Services {
-    public class TemplateService {
-
+namespace Vabulu.Services
+{
+    public class TemplateService
+    {
         I18n.TranslationService I18n;
         private string language;
         private object data;
-        public TemplateService(I18n.TranslationService translationService) {
+        public TemplateService(I18n.TranslationService translationService)
+        {
             I18n = translationService;
         }
 
-        public string Render(string template, object data, string language = null) {
+        public string Render(string template, object data, string language = null)
+        {
             this.language = language;
             this.data = data;
 
             var parsed = Template.Parse(template);
-            var context = new TemplateContext() {
+            var context = new TemplateContext()
+            {
                 TryGetMember = this.TryGetMember,
                 TryGetVariable = this.TryGetVariable,
                 MemberFilter = x => false,
@@ -34,27 +38,34 @@ namespace Vabulu.Services {
             return parsed.Render(context);
         }
 
-        public async Task<string> LoadTemplateAsync(string path) {
+        public async Task<string> LoadTemplateAsync(string path)
+        {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), path);
-            if (File.Exists(filePath)) {
+            if (File.Exists(filePath))
+            {
                 return System.IO.File.ReadAllText(filePath);
             }
 
             var resource = $"Vabulu.{string.Join(".", path.Split("/"))}";
             var stream = this.GetType().Assembly.GetManifestResourceStream(resource);
-            using(var reader = new StreamReader(stream, Encoding.UTF8)) {
+            using (var reader = new StreamReader(stream, Encoding.UTF8))
+            {
                 return await reader.ReadToEndAsync();
             }
         }
 
-        private bool TryGetMember(TemplateContext context, SourceSpan span, object target, string member, out object value) {
+        private bool TryGetMember(TemplateContext context, SourceSpan span, object target, string member, out object value)
+        {
             value = GetValue(target, member);
             return true;
         }
 
-        private bool TryGetVariable(TemplateContext context, SourceSpan span, ScriptVariable variable, out object value) {
-            try {
-                switch (variable.Name) {
+        private bool TryGetVariable(TemplateContext context, SourceSpan span, ScriptVariable variable, out object value)
+        {
+            try
+            {
+                switch (variable.Name)
+                {
                     case "default":
                         value = new Default();
                         return true;
@@ -68,13 +79,16 @@ namespace Vabulu.Services {
                         value = GetValue(this.data, variable.Name);
                         return true;
                 }
-            } catch {
+            }
+            catch
+            {
                 value = null;
                 return false;
             }
         }
 
-        private static object GetValue(object obj, string memeber) {
+        private static object GetValue(object obj, string memeber)
+        {
             if (obj == null)
                 return null;
 
@@ -89,10 +103,13 @@ namespace Vabulu.Services {
             return null;
         }
 
-        private class Default : IScriptCustomFunction {
-            object IScriptCustomFunction.Invoke(TemplateContext context, ScriptNode callerContext, ScriptArray arguments, ScriptBlockStatement blockStatement) {
+        private class Default : IScriptCustomFunction
+        {
+            object IScriptCustomFunction.Invoke(TemplateContext context, ScriptNode callerContext, ScriptArray arguments, ScriptBlockStatement blockStatement)
+            {
                 var name = arguments[0].ToString();
-                try {
+                try
+                {
                     var type = Type.GetType($"{name}", false, true) ??
                         Type.GetType($"System.{name}", false, true) ??
                         Type.GetType($"Vabulu.{name}", false, true) ??
@@ -106,37 +123,45 @@ namespace Vabulu.Services {
                         return Activator.CreateInstance(type);
 
                     return null;
-                } catch {
+                }
+                catch
+                {
                     return null;
                 }
             }
         }
 
-        private class NumberWithSeperator : IScriptCustomFunction {
-            object IScriptCustomFunction.Invoke(TemplateContext context, ScriptNode callerContext, ScriptArray arguments, ScriptBlockStatement blockStatement) {
+        private class NumberWithSeperator : IScriptCustomFunction
+        {
+            object IScriptCustomFunction.Invoke(TemplateContext context, ScriptNode callerContext, ScriptArray arguments, ScriptBlockStatement blockStatement)
+            {
                 var seperator = "'";
                 var str = arguments[0].ToString();
-                if (decimal.TryParse(str, out var dec)) {
+                if (decimal.TryParse(str, out var dec))
+                {
                     return dec.ToString("#,##0.00").Replace(",", seperator);
                 }
                 return string.Empty;
             }
         }
 
-        private class Translate : IScriptCustomFunction {
+        private class Translate : IScriptCustomFunction
+        {
             private readonly I18n.TranslationService i18n;
             private readonly string lang;
 
-            public Translate(I18n.TranslationService i18n, string lang) {
+            public Translate(I18n.TranslationService i18n, string lang)
+            {
                 this.i18n = i18n;
                 this.lang = lang;
             }
 
-            object IScriptCustomFunction.Invoke(TemplateContext context, ScriptNode callerContext, ScriptArray arguments, ScriptBlockStatement blockStatement) {
+            object IScriptCustomFunction.Invoke(TemplateContext context, ScriptNode callerContext, ScriptArray arguments, ScriptBlockStatement blockStatement)
+            {
                 var key = arguments[0].ToString();
                 return this.i18n.TranslateAsync(this.lang, key).GetAwaiter().GetResult();
             }
         }
-        private static string ToCamelCase(string str) =>(str == null || str.Length < 2) ? str : Char.ToLowerInvariant(str[0]) + str.Substring(1);
+        private static string ToCamelCase(string str) => (str == null || str.Length < 2) ? str : Char.ToLowerInvariant(str[0]) + str.Substring(1);
     }
 }

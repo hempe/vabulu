@@ -11,10 +11,12 @@ using Vabulu.Middleware;
 using Vabulu.Models;
 using Vabulu.Tables;
 
-namespace Vabulu.Services {
-
-    internal partial class UserStore : IUserEmailStore<User> {
-        public async Task<User> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken) {
+namespace Vabulu.Services
+{
+    internal partial class UserStore : IUserEmailStore<User>
+    {
+        public async Task<User> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
+        {
             var entity =
                 await this.tableStore.GetAsync(Args<UserEntity>.Where(x => x.NormalizedEmail, normalizedEmail)) ??
                 await this.tableStore.GetAsync(Args<UserEntity>.Where(x => x.Email, normalizedEmail)) ??
@@ -28,17 +30,20 @@ namespace Vabulu.Services {
 
         public Task<string> GetNormalizedEmailAsync(User user, CancellationToken cancellationToken) => Task.FromResult(user.NormalizedEmail);
 
-        public Task SetEmailAsync(User user, string email, CancellationToken cancellationToken) {
+        public Task SetEmailAsync(User user, string email, CancellationToken cancellationToken)
+        {
             user.Email = email;
             return Task.CompletedTask;
         }
 
-        public Task SetEmailConfirmedAsync(User user, bool confirmed, CancellationToken cancellationToken) {
+        public Task SetEmailConfirmedAsync(User user, bool confirmed, CancellationToken cancellationToken)
+        {
             user.EmailConfirmed = confirmed;
             return Task.CompletedTask;
         }
 
-        public Task SetNormalizedEmailAsync(User user, string normalizedEmail, CancellationToken cancellationToken) {
+        public Task SetNormalizedEmailAsync(User user, string normalizedEmail, CancellationToken cancellationToken)
+        {
             user.NormalizedEmail = normalizedEmail;
             return Task.CompletedTask;
         }

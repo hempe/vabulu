@@ -6,10 +6,12 @@ using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Vabulu.Middleware {
+
     /// <summary>
     /// Extensions for <see cref="LambdaExpression"/>.
     /// </summary>
     internal static class ExpressionExtensions {
+
         /// <summary>
         /// Gets the property access list.
         /// </summary>
@@ -29,8 +31,7 @@ namespace Vabulu.Middleware {
         }
 
         /// <summary>
-        /// This API supports the Entity Framework Core infrastructure and is not intended to be used
-        /// directly from your code. This API may change or be removed in future releases.
+        /// Get all properties that match the property access expression.
         /// </summary>
         /// <param name="lambdaExpression">The lambda expression.</param>
         /// <param name="propertyMatcher">The property matcher.</param>
@@ -58,8 +59,7 @@ namespace Vabulu.Middleware {
         }
 
         /// <summary>
-        /// This API supports the Entity Framework Core infrastructure and is not intended to be used
-        /// directly from your code. This API may change or be removed in future releases.
+        /// Remove expression conversion.
         /// </summary>
         /// <param name="expression">The expression.</param>
         /// <returns>Expression without convert</returns>
@@ -74,8 +74,7 @@ namespace Vabulu.Middleware {
         }
 
         /// <summary>
-        /// This API supports the Entity Framework Core infrastructure and is not intended to be used
-        /// directly from your code. This API may change or be removed in future releases.
+        /// Simple property matcher 
         /// </summary>
         /// <param name="parameterExpression">The parameter expression.</param>
         /// <param name="propertyAccessExpression">The property access expression.</param>

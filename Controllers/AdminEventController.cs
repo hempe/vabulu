@@ -15,23 +15,26 @@ using Vabulu.Services;
 using Vabulu.Services.I18n;
 using Vabulu.Views;
 
-namespace Vabulu.Controllers {
-
+namespace Vabulu.Controllers
+{
     [Route("api/admin/property")]
     [Authorize(Roles = "edit, admin")]
-    public class AdminEventController : BaseController {
+    public class AdminEventController : BaseController
+    {
         public AdminEventController(UserManager<User> userManager, TableStore tableStore) : base(userManager, tableStore) { }
 
         [HttpGet("{propertyId}/events")]
         [ProducesResponseType(typeof(CalendarEvent[]), 200)]
-        public async Task<IActionResult> Get([FromRoute] string propertyId) {
+        public async Task<IActionResult> Get([FromRoute] string propertyId)
+        {
             var values = await this.TableStore.GetAllAsync(Args<Tables.CalendarEvent>.Where(x => x.PropertyId, propertyId));
-            return this.Ok(values.Select(x =>(CalendarEvent) x));
+            return this.Ok(values.Select(x => (CalendarEvent)x));
         }
 
         [HttpPost("{propertyId}/events")]
         [ProducesResponseType(typeof(CalendarEvent), 200)]
-        public async Task<IActionResult> Post([FromRoute] string propertyId, [FromBody] CalendarEvent data) {
+        public async Task<IActionResult> Post([FromRoute] string propertyId, [FromBody] CalendarEvent data)
+        {
             if (data == null)
                 return this.BadRequest("Failed to save data.");
 
@@ -49,7 +52,8 @@ namespace Vabulu.Controllers {
 
         [HttpDelete("{propertyId}/events/{id}")]
         [ProducesResponseType(200)]
-        public async Task<IActionResult> Delete([FromRoute] string propertyId, [FromRoute] string id) {
+        public async Task<IActionResult> Delete([FromRoute] string propertyId, [FromRoute] string id)
+        {
             await this.TableStore.DeleteAsync(new Tables.CalendarEvent { Id = id, PropertyId = propertyId });
             return this.Ok();
         }

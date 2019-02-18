@@ -1,5 +1,6 @@
 using System;
 
-namespace Vabulu.Attributes {
+namespace Vabulu.Attributes
+{
     public class RowKeyAttribute : Attribute { }
 }

@@ -2,11 +2,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.WindowsAzure.Storage.Table;
 using Vabulu.Attributes;
 
-namespace Vabulu.Tables {
-
+namespace Vabulu.Tables
+{
     [Table("Logins")]
-    public class LoginInfo : TableEntity {
-
+    public class LoginInfo : TableEntity
+    {
         [IgnoreProperty]
         [PartitionKey]
         public string LoginProvider { get; set; }
@@ -24,7 +24,8 @@ namespace Vabulu.Tables {
 
         public static implicit operator UserLoginInfo(LoginInfo user) => user == null ? null : new UserLoginInfo(user.LoginProvider, user.ProviderKey, user.DisplayName);
 
-        public static implicit operator LoginInfo(UserLoginInfo user) => user == null ? null : new LoginInfo {
+        public static implicit operator LoginInfo(UserLoginInfo user) => user == null ? null : new LoginInfo
+        {
             DisplayName = user.ProviderDisplayName,
             LoginProvider = user.LoginProvider,
             ProviderKey = user.ProviderKey,

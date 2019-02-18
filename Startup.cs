@@ -16,19 +16,23 @@ using Swashbuckle.AspNetCore.Swagger;
 using Vabulu.Middleware;
 using Vabulu.Models;
 
-namespace Vabulu {
-    public class Startup {
-        public Startup(IHostingEnvironment env) {
+namespace Vabulu
+{
+    public class Startup
+    {
+        public Startup(IHostingEnvironment env)
+        {
 
-            JsonConvert.DefaultSettings = () => new JsonSerializerSettings {
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+            {
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
                 Converters = new List<JsonConverter> { new Middleware.FuzzyPropertyNameMatchingConverter() }
             };
 
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional : false, reloadOnChange : true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional : true)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
@@ -37,9 +41,11 @@ namespace Vabulu {
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services) {
+        public void ConfigureServices(IServiceCollection services)
+        {
             services.AddIdentity<User, IdentityRole>
-                (options => {
+                (options =>
+                {
                     // Password settings
                     options.Password.RequireDigit = true;
                     options.Password.RequiredLength = 8;
@@ -81,21 +87,24 @@ namespace Vabulu {
             services.AddTransient<Services.ImageService>();
 
             services.AddAuthentication()
-                .AddGoogle(option => {
+                .AddGoogle(option =>
+                {
                     option.ClientId = Configuration["Authentication:Google:ClientId"];
                     option.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
                     option.CallbackPath = "/.auth/signin/google/callback";
                     option.AccessType = "offline";
                     option.SaveTokens = true;
                 })
-                .AddMicrosoftAccount(option => {
+                .AddMicrosoftAccount(option =>
+                {
                     option.ClientId = Configuration["Authentication:Microsoft:ClientId"];
                     option.ClientSecret = Configuration["Authentication:Microsoft:ClientSecret"];
                     option.CallbackPath = "/.auth/signin/microsoft/callback";
                     option.SaveTokens = true;
                 });
 
-            services.ConfigureApplicationCookie(options => {
+            services.ConfigureApplicationCookie(options =>
+            {
                 options.LoginPath = "/.auth/error/401";
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
                 options.AccessDeniedPath = "/.auth/error/403";
@@ -108,24 +117,29 @@ namespace Vabulu {
 
             services
                 .AddMvc()
-                .AddJsonOptions(options => {
+                .AddJsonOptions(options =>
+                {
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                     options.SerializerSettings.Converters.Add(new Middleware.FuzzyPropertyNameMatchingConverter());
                 });
 
-            services.AddSwaggerGen(c => {
+            services.AddSwaggerGen(c =>
+            {
                 c.SwaggerDoc("v1", new Info { Title = "Vabulu", Version = "v1" });
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, Services.WarmUp warmUp) {
-            if (Configuration.GetValue<bool>("StaticFileHost:Enabled")) {
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, Services.WarmUp warmUp)
+        {
+            if (Configuration.GetValue<bool>("StaticFileHost:Enabled"))
+            {
                 var rootDirectory = Path.Combine(env.ContentRootPath, Configuration.GetValue<string>("StaticFileHost:RootDirectory"));
                 app.UseCustomStaticFiles(rootDirectory);
             }
 
-            if (env.IsDevelopment()) {
+            if (env.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
@@ -134,7 +148,8 @@ namespace Vabulu {
             app.UseSwagger();
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c => {
+            app.UseSwaggerUI(c =>
+            {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Vabulu");
             });
 

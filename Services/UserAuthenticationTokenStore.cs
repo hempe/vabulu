@@ -11,21 +11,26 @@ using Vabulu.Middleware;
 using Vabulu.Models;
 using Vabulu.Tables;
 
-namespace Vabulu.Services {
-
-    internal partial class UserStore : IUserAuthenticationTokenStore<User> {
-        public async Task RemoveTokenAsync(User user, string loginProvider, string name, CancellationToken cancellationToken) {
-            var result = await this.tableStore.DeleteAsync(new Token {
+namespace Vabulu.Services
+{
+    internal partial class UserStore : IUserAuthenticationTokenStore<User>
+    {
+        public async Task RemoveTokenAsync(User user, string loginProvider, string name, CancellationToken cancellationToken)
+        {
+            var result = await this.tableStore.DeleteAsync(new Token
+            {
                 LoginProvider = loginProvider,
-                    UserId = user.Id,
-                    Name = name
+                UserId = user.Id,
+                Name = name
             });
             if (result.HttpStatusCode >= 200 && result.HttpStatusCode < 300)
                 throw new Exception("Update failed");
         }
 
-        public async Task SetTokenAsync(User user, string loginProvider, string name, string value, CancellationToken cancellationToken) {
-            var entity = new Token {
+        public async Task SetTokenAsync(User user, string loginProvider, string name, string value, CancellationToken cancellationToken)
+        {
+            var entity = new Token
+            {
                 LoginProvider = loginProvider,
                 UserId = user.Id,
                 Name = name,
@@ -39,11 +44,13 @@ namespace Vabulu.Services {
             throw new Exception("Update failed");
         }
 
-        public async Task<string> GetTokenAsync(User user, string loginProvider, string name, CancellationToken cancellationToken) {
-            var entity = await this.tableStore.GetAsync(new Token {
+        public async Task<string> GetTokenAsync(User user, string loginProvider, string name, CancellationToken cancellationToken)
+        {
+            var entity = await this.tableStore.GetAsync(new Token
+            {
                 LoginProvider = loginProvider,
-                    UserId = user.Id,
-                    Name = name
+                UserId = user.Id,
+                Name = name
             });
 
             return entity?.Value;

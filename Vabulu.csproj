@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <LangVersion>7.1</LangVersion>
     <RootNamespace>Vabulu</RootNamespace>
     <AssemblyName>Vabulu</AssemblyName>
@@ -8,16 +8,17 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="EPPlus.Core" Version="1.5.4" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="1.1.0" />
-    <PackageReference Include="WindowsAzure.Storage" Version="8.6.0" />
-    <PackageReference Include="MimeMapping" Version="1.0.1.10" />
-    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0002" />
-    <PackageReference Include="Microsoft.AspNetCore.NodeServices" Version="2.0.1"/>
-    <PackageReference Include="Scriban" Version="1.0.0" />
-    <PackageReference Include="Sendgrid" Version="9.9.0" />
-    <PackageReference Include="Flurl" Version="2.6.0" />
+    <PackageReference Include="EPPlus.Core" Version="1.5.4"/>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.2"/>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1"/>
+    <PackageReference Include="WindowsAzure.Storage" Version="9.3.3"/>
+    <PackageReference Include="WindowsAzure.StorageExtensions" Version="1.2.0" />
+    <PackageReference Include="MimeMapping" Version="1.0.1.12"/>
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0006"/>
+    <PackageReference Include="Microsoft.AspNetCore.NodeServices" Version="2.2.0"/>
+    <PackageReference Include="Scriban" Version="1.2.9"/>
+    <PackageReference Include="Sendgrid" Version="9.10.0"/>
+    <PackageReference Include="Flurl" Version="2.2.0"/>
   </ItemGroup>
   <ItemGroup>
         <EmbeddedResource Include="Services\I18n\*.json" />

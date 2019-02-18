@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.WindowsAzure.Storage.Table;
 using Vabulu.Attributes;
 
-namespace Vabulu.Tables {
-
+namespace Vabulu.Tables
+{
     [Table("CalendarEvents")]
-    public class CalendarEvent : TableEntity {
+    public class CalendarEvent : TableEntity
+    {
 
         [IgnoreProperty]
         [RowKey]
@@ -31,7 +32,8 @@ namespace Vabulu.Tables {
         public Models.CalendarEventData Meta { get; set; }
         public string MetaString { get; set; }
 
-        public static implicit operator CalendarEvent(Models.CalendarEvent x) => x == null ? null : new CalendarEvent {
+        public static implicit operator CalendarEvent(Models.CalendarEvent x) => x == null ? null : new CalendarEvent
+        {
             PropertyId = x.PropertyId,
             Id = x.Id,
             Start = x.Start,
@@ -41,7 +43,8 @@ namespace Vabulu.Tables {
             Meta = x.Meta
         };
 
-        public static implicit operator Models.CalendarEvent(CalendarEvent x) => x == null ? null : new Models.CalendarEvent {
+        public static implicit operator Models.CalendarEvent(CalendarEvent x) => x == null ? null : new Models.CalendarEvent
+        {
             PropertyId = x.PropertyId,
             Id = x.Id,
             Start = x.Start,

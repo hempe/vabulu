@@ -11,11 +11,12 @@ using Vabulu.Middleware;
 using Vabulu.Models;
 using Vabulu.Tables;
 
-namespace Vabulu.Services {
-
-    internal partial class UserStore : IUserLoginStore<User> {
-
-        public async Task AddLoginAsync(User user, UserLoginInfo login, CancellationToken cancellationToken) {
+namespace Vabulu.Services
+{
+    internal partial class UserStore : IUserLoginStore<User>
+    {
+        public async Task AddLoginAsync(User user, UserLoginInfo login, CancellationToken cancellationToken)
+        {
 
             LoginInfo entity = login;
             entity.UserId = user.Id;
@@ -26,7 +27,8 @@ namespace Vabulu.Services {
             throw new Exception("Update failed");
         }
 
-        public async Task<User> FindByLoginAsync(string loginProvider, string providerKey, CancellationToken cancellationToken) {
+        public async Task<User> FindByLoginAsync(string loginProvider, string providerKey, CancellationToken cancellationToken)
+        {
             var entity = await this.tableStore.GetAsync<LoginInfo>(new LoginInfo { LoginProvider = loginProvider, ProviderKey = providerKey });
 
             if (entity == null)
@@ -35,15 +37,19 @@ namespace Vabulu.Services {
             return await this.FindByIdAsync(entity.UserId, cancellationToken);
         }
 
-        public async Task<IList<UserLoginInfo>> GetLoginsAsync(User user, CancellationToken cancellationToken) {
+        public async Task<IList<UserLoginInfo>> GetLoginsAsync(User user, CancellationToken cancellationToken)
+        {
             var entities = await this.tableStore.GetAllAsync(Args<LoginInfo>.Where(x => x.UserId, user.Id));
-            return entities.Select(x =>(UserLoginInfo) x).ToList();
+            return entities.Select(x => (UserLoginInfo)x).ToList();
         }
 
-        public async Task RemoveLoginAsync(User user, string loginProvider, string providerKey, CancellationToken cancellationToken) {
-            try {
+        public async Task RemoveLoginAsync(User user, string loginProvider, string providerKey, CancellationToken cancellationToken)
+        {
+            try
+            {
                 await this.tableStore.DeleteAsync<UserEntity>(user);
-            } catch { }
+            }
+            catch { }
         }
     }
 }

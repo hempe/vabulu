@@ -15,22 +15,25 @@ using Vabulu.Services;
 using Vabulu.Services.I18n;
 using Vabulu.Views;
 
-namespace Vabulu.Controllers {
-
+namespace Vabulu.Controllers
+{
     [Route("api/property")]
     [Authorize(Roles = "user, edit, admin")]
-    public class EventController : BaseController {
+    public class EventController : BaseController
+    {
         public EventController(UserManager<User> userManager, TableStore tableStore) : base(userManager, tableStore) { }
 
         [HttpGet("{propertyId}/events")]
         [ProducesResponseType(typeof(CalendarEvent[]), 200)]
-        public async Task<IActionResult> Get([FromRoute] string propertyId) {
+        public async Task<IActionResult> Get([FromRoute] string propertyId)
+        {
             var values = await this.TableStore.GetAllAsync(Args<Tables.CalendarEvent>.Where(x => x.PropertyId, propertyId));
-            return this.Ok(values.Select(x => new CalendarEvent {
+            return this.Ok(values.Select(x => new CalendarEvent
+            {
                 Start = x.Start,
-                    End = x.End,
-                    PropertyId = x.PropertyId,
-                    Color = x.Color
+                End = x.End,
+                PropertyId = x.PropertyId,
+                Color = x.Color
             }));
         }
     }
